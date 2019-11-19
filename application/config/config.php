@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+$config['base_url']     = 'http://localhost/uzahacom/dompay.v3';
+$config['web_title']	= "DomPAY - Dompet Digital Multi Finance";
+$config['web_footer']	= $config['web_title'] . " &copy; " . date('Y') . ". Version 1.0";
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,7 @@ $config['base_url'] = '';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------

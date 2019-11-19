@@ -17,15 +17,15 @@
                     </div>
                     <?= form_open('', ['id' => 'default-form', 'log' => 'Register']); ?>
                         <div class="form-input">
-                            <input type="text" id="input-nama" class="form-control" name="nama" placeholder="Nama">
+                            <input type="text" id="input-nama" class="form-control" name="nama" placeholder="Nama" autofocus>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-input">
+                            <input type="text" id="input-nohp" class="form-control" name="nohp" placeholder="Nomor HP">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-input">
                             <input type="text" id="input-email" class="form-control" name="email" placeholder="Email">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-input">
-                            <input type="text" id="input-noHp" class="form-control" name="noHp" placeholder="Nomor HP">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-input">
