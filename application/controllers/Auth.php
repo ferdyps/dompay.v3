@@ -2,20 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller {
-
-	
-	public function __construct()
-	{
+// =============================================================
+	public function __construct() {
 		parent::__construct();
+
 		$this->load->library(['form_validation', 'facebook']);
 		$this->load->model('auth_model');
 		
-		
 		include_once APPPATH . "libraries/google-api-php-client/Google_Client.php";
 		include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
-	}
-	
 
+		if ($this->session->userdata('isLoggedIn')) {
+			redirect('user', 'refresh');
+		}
+	}
+// =============================================================
 	public function index() {
 		$this->form_validation->set_rules([
 			[
@@ -41,9 +42,15 @@ class Auth extends CI_Controller {
 
 				if ($row != 0) {
 
-					$url = base_url('user');
+					$array = [
+						'id' => $data_account->id,
+						'isLoggedIn' => true
+					];
+					
+					$this->session->set_userdata($array);
+
 					$json = [
-						'url' => $url,
+						'url' => base_url('user'),
 						'message' => 'Login Berhasil..'
 					];
 				} else {
@@ -144,4 +151,10 @@ class Auth extends CI_Controller {
 			$this->load->view('auth/index', $data);
 		}
 	}
+// =============================================================
+	public function logout() {
+		$this->session->sess_destroy();
+		redirect(base_url(), 'refresh');
+	}
+// =============================================================
 }
