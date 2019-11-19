@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2019 at 04:02 PM
+-- Generation Time: Nov 19, 2019 at 04:40 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -61,8 +61,9 @@ CREATE TABLE `mutasi` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `nohp` varchar(255) NOT NULL,
+  `nohp` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -70,8 +71,9 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `nohp`, `password`) VALUES
-(21, 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8');
+INSERT INTO `users` (`id`, `nama`, `email`, `nohp`, `password`) VALUES
+(21, 'Petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8'),
+(22, 'Alex', 'alex@gmail.com', '081234567899', '534b44a19bf18d20b71ecc4eb77c572f');
 
 --
 -- Indexes for dumped tables
@@ -119,7 +121,7 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables

@@ -45,6 +45,7 @@ class Auth extends CI_Controller {
 
 					$array = [
 						'id' => $data_account->id,
+						'nama' => $data_account->nama,
 						'isLoggedIn' => true
 					];
 					
@@ -72,6 +73,7 @@ class Auth extends CI_Controller {
 			$data = [
 				'content' => 'auth/login',
 			];
+
 			$this->load->view('auth/index', $data);
 		}
 	}
@@ -111,19 +113,15 @@ class Auth extends CI_Controller {
 			$nohp = $this->input->post('nohp');
 			$password = md5($this->input->post('password'));
 			
-			
 			if ($this->form_validation->run() == TRUE) {
-				$data_akun = [
+				$data = [
+					'nama' => $nama,
 					'email' => $email,
 					'nohp' => $nohp,
 					'password' => $password
 				];
 
-				$data_mhs = [
-					'nama' => $nama
-				];
-
-				$query = $this->auth_model->register($data_akun,$data_mhs);
+				$query = $this->auth_model->register($data);
 				
 				if ($query) {
 					$url = base_url();

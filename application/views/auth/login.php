@@ -13,7 +13,7 @@
                     </div>
                     <div class="page-links">
                         <a href="<?= base_url() ?>" class="active">Login</a>
-                        <a href="<?= base_url('auth/register'); ?>">Register</a>
+                        <a href="<?= base_url('register'); ?>">Register</a>
                     </div>
                     <?= form_open('', ['id' => 'default-form', 'log' => 'Login']); ?>
                         <div class="form-input">
