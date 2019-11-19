@@ -6,11 +6,11 @@ class Auth extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->library(['form_validation', 'facebook']);
+		$this->load->library(['form_validation']);
 		$this->load->model('auth_model');
 		
-		include_once APPPATH . "libraries/google-api-php-client/Google_Client.php";
-		include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
+		// include_once APPPATH . "libraries/google-api-php-client/Google_Client.php";
+		// include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
 
 		if ($this->session->userdata('isLoggedIn')) {
 			redirect('user', 'refresh');
