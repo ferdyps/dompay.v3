@@ -13,7 +13,8 @@ class Auth extends CI_Controller {
 		// include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
 
 		if ($this->session->userdata('isLoggedIn')) {
-			redirect('user', 'refresh');
+			$url = base_url('user');
+			header("Location: $url");
 		}
 	}
 // =============================================================
