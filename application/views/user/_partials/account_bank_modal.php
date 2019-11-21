@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addAccountModalLabel">New message</h5>
+        <h5 class="modal-title" id="addAccountModalLabel">Tambah Akun Bank</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -11,7 +11,7 @@
       <div class="modal-body">
           <div class="form-group form-input">
             <label for="input-nomorRek" class="col-form-label">Nomor Rekening :</label>
-            <input type="text" name="nomorRek" class="form-control" id="input-nomorRek">
+            <input type="text" name="nomorRek" class="form-control" id="input-nomorRek" placeholder="Nomor Rekening..">
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group form-input">
@@ -23,17 +23,17 @@
           </div>
           <div class="form-group form-input">
             <label for="input-username" class="col-form-label">Username :</label>
-            <input type="text" name="username" class="form-control" id="input-username">
+            <input type="text" name="username" class="form-control" id="input-username" placeholder="Username..">
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group form-input">
             <label for="input-password" class="col-form-label">Password :</label>
-            <input type="text" name="password" class="form-control" id="input-password">
+            <input type="text" name="password" class="form-control" id="input-password" placeholder="Password..">
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group form-input">
             <label for="input-confirm_password" class="col-form-label">Konfirmasi Password :</label>
-            <input type="text" name="confirm_password" class="form-control" id="input-confirm_password">
+            <input type="text" name="confirm_password" class="form-control" id="input-confirm_password" placeholder="Konfirmasi Password..">
             <div class="invalid-feedback"></div>
           </div>
       </div>
