@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?= form_open('user/add_accountBank', ['id' => 'default-form', 'log' => 'Tambah Akun Bank']); ?>
+      <?= form_open('user/add_accountBank', ['id' => 'modal-form', 'log' => 'Tambah Akun Bank']); ?>
       <div class="modal-body">
           <div class="form-group form-input">
             <label for="input-nomorRek" class="col-form-label">Nomor Rekening :</label>
@@ -28,12 +28,12 @@
           </div>
           <div class="form-group form-input">
             <label for="input-password" class="col-form-label">Password :</label>
-            <input type="text" name="password" class="form-control" id="input-password" placeholder="Password..">
+            <input type="password" name="password" class="form-control" id="input-password" placeholder="Password..">
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group form-input">
             <label for="input-confirm_password" class="col-form-label">Konfirmasi Password :</label>
-            <input type="text" name="confirm_password" class="form-control" id="input-confirm_password" placeholder="Konfirmasi Password..">
+            <input type="password" name="confirm_password" class="form-control" id="input-confirm_password" placeholder="Konfirmasi Password..">
             <div class="invalid-feedback"></div>
           </div>
       </div>
