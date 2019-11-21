@@ -24,6 +24,14 @@
 
             $this->load->view('user/index', $data);
         }
+
+        public function bank() {
+            $data = [
+                'content' => 'user/bank'
+            ];
+
+            $this->load->view('user/index', $data);
+        }
 // =============================================================
         public function add_accountBank() {
             $this->form_validation->set_rules([

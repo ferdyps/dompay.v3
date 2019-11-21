@@ -8,4 +8,5 @@
     </div>
     <?php $this->load->view('user/_partials/scroll');?>
     <?php $this->load->view('user/_partials/modal');?>
+    <?php $this->load->view('user/_partials/account_bank_modal');?>
 <?php $this->load->view('user/_partials/footer');?>
