@@ -3,10 +3,10 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('user'); ?>">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-money-bill-wave"></i>
+        <div class="sidebar-brand-icon">
+            <!-- <i class="fas fa-money-bill-wave"></i> -->
+            <img src="<?= base_url('assets/images/login.png')?>" width="100%"><img>
         </div>
-        <div class="sidebar-brand-text mx-3">DomPAY</div>
     </a>
 
     <!-- Divider -->
