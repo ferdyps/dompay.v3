@@ -36,22 +36,17 @@
         public function add_accountBank() {
             $this->form_validation->set_rules([
                 [
-                    'field' => 'nama',
-                    'label' => 'Nama',
-                    'rules' => 'trim|required'
+                    'field' => 'nomorRek',
+                    'label' => 'Nomor Rekening',
+                    'rules' => 'trim|required|numeric|min_length[10]|max_length[16]|is_unique[accounts.no_rek]'
                 ],
                 [
-                    'field' => 'email',
-                    'label' => 'Email',
-                    'rules' => 'trim|required|valid_email|is_unique[users.email]'
+                    'field' => 'username',
+                    'label' => 'Username',
+                    'rules' => 'trim|required|is_unique[accounts.username]'
                 ],
                 [
-                    'field' => 'nohp', 
-                    'label' => 'Nomor HP', 
-                    'rules' => 'trim|required|numeric|min_length[10]|max_length[13]|is_unique[users.nohp]'
-                ],
-                [
-                    'field' => 'password', 
+                    'field' => 'password',
                     'label' => 'Password', 
                     'rules' => 'trim|required'
                 ],
@@ -61,6 +56,29 @@
                     'rules' => 'trim|required|matches[password]'
                 ]
             ]);
+
+            if ($this->input->post()) {
+                $username = $this->input->post('username');
+                $password = $this->input->post('password');
+                $no_rek = $this->input->post('nomorRek');
+                $typeBank = $this->input->post('typeBank');
+                
+                if ($this->form_validation->run() == TRUE) {
+                    # code...
+                } else {
+                    $no = 0;
+                    foreach ($this->input->post() as $key => $value) {
+                        if (form_error($key) != "") {
+                            $json['form_errors'][$no]['id'] = $key;
+                            $json['form_errors'][$no]['msg'] = form_error($key, null, null);
+                            $no++;
+                        }
+                    }
+                }
+                echo json_encode($json);
+            } else {
+                redirect(base_url('user/bank'),'refresh');
+            }
         }
     }
 ?>
