@@ -85,4 +85,5 @@ $(document).ready(function () {
         $('textarea').removeClass('is-invalid');
     });
 // =============================================================
+    $('#dataTable').DataTable();
 });
