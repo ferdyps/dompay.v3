@@ -13,7 +13,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item <?php if($title == 'Dashboard') echo "active"; ?>">
         <a class="nav-link" href="<?= base_url('user'); ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- Nav Item - Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item  <?php if($title == 'Bank') echo "active"; ?>">
         <a class="nav-link" href="<?= base_url('user/bank'); ?>">
             <i class="fas fa-fw fa-university"></i>
             <span>Bank</span>
@@ -37,7 +37,7 @@
     </li>
 
     <!-- Nav Item - Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item  <?php if($title == 'Mutasi') echo "active"; ?>">
         <a class="nav-link" href="<?= base_url('user/mutasi'); ?>">
             <i class="fas fa-fw fa-sync-alt"></i>
             <span>Mutasi</span>

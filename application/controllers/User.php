@@ -19,7 +19,8 @@
 // =============================================================
         public function index() {
             $data = [
-                'content' => 'user/dashboard'
+                'content' => 'user/dashboard',
+                'title' => 'Dashboard'
             ];
 
             $this->load->view('user/index', $data);
@@ -27,9 +28,19 @@
 
         public function bank() {
             $data = [
-                'content' => 'user/bank'
+                'content' => 'user/bank',
+                'title' => 'Bank'
             ];
 
+            $this->load->view('user/index', $data);
+        }
+
+        public function mutasi() {
+            $data = [
+                'content' => 'user/mutasi',
+                'title' => 'Mutasi',
+                'listDataAccount' => $this->account_model->viewByAcc($this->id_account)
+            ];
             $this->load->view('user/index', $data);
         }
 // =============================================================
