@@ -25,5 +25,34 @@
             $this->load->view('user/index', $data);
         }
 // =============================================================
+        public function add_accountBank() {
+            $this->form_validation->set_rules([
+                [
+                    'field' => 'nama',
+                    'label' => 'Nama',
+                    'rules' => 'trim|required'
+                ],
+                [
+                    'field' => 'email',
+                    'label' => 'Email',
+                    'rules' => 'trim|required|valid_email|is_unique[users.email]'
+                ],
+                [
+                    'field' => 'nohp', 
+                    'label' => 'Nomor HP', 
+                    'rules' => 'trim|required|numeric|min_length[10]|max_length[13]|is_unique[users.nohp]'
+                ],
+                [
+                    'field' => 'password', 
+                    'label' => 'Password', 
+                    'rules' => 'trim|required'
+                ],
+                [
+                    'field' => 'confirm_password', 
+                    'label' => 'Konfirmasi Password', 
+                    'rules' => 'trim|required|matches[password]'
+                ]
+            ]);
+        }
     }
 ?>
