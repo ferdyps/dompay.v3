@@ -64,7 +64,21 @@
                 $typeBank = $this->input->post('typeBank');
                 
                 if ($this->form_validation->run() == TRUE) {
-                    # code...
+                    $data = [
+                        'id' => $this->id_account,
+                        'username' => $username,
+                        'password' => $password,
+                        'no_rek' => $no_rek,
+                        'typeBank' => $typeBank
+                    ];
+
+                    $query = $this->account_model->add($data);
+
+                    if ($query) {
+                        $json['message'] = "Akun berhasil ditambah..";
+                    } else {
+                        $json['errors'] = "Akun gagal ditambah..!";
+                    }
                 } else {
                     $no = 0;
                     foreach ($this->input->post() as $key => $value) {
@@ -79,6 +93,10 @@
             } else {
                 redirect(base_url('user/bank'),'refresh');
             }
+        }
+
+        public function get_accountBank() {
+            echo json_encode($this->account_model->viewByAcc($this->id_account));
         }
     }
 ?>

@@ -13,16 +13,66 @@
                     <thead>
                         <tr class="text-center bg-primary text-white">
                             <th width="5%">No</th>
-                            <th width="5%">Username</th>
+                            <th>Username</th>
                             <th>Nomor Rekening</th>
                             <th>Tipe Bank</th>
                             <th width="10%">Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="dataAccount">
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function getData() {
+        var no = 1;
+        $.ajax({
+            url: "<?= base_url('user/get_accountBank'); ?>",
+            type: "post",
+            dataType: "json",
+            async: true,
+            timeout: 40000,
+            beforeSend:function(){
+                $('.btn-submit').attr("disabled", true);
+                $('#status').removeClass("d-none");
+                $('#btn-text').addClass("d-none");
+            },
+            complete:function(){
+                $('.btn-submit').attr("disabled", false);
+                $('#status').addClass("d-none");
+                $('#btn-text').removeClass("d-none");
+            },
+            success:function(data){
+                if (data.length > 0) {
+                    $('#dataAccount').html('');
+                }
+                
+                data.forEach(item => {
+                    $('#dataAccount').append(`
+                        <tr>
+                            <td class="text-center">${no++}</td>
+                            <td class="text-center">${item.username}</td>
+                            <td class="text-center">${item.no_rek}</td>
+                            <td class="text-center">${item.typeBank}</td>
+                            <td></td>
+                        </tr>
+                    `);
+                });
+            },
+            error:function(){
+                Swal.fire({
+                    title: "Error",
+                    text: "Error pada System..!",
+                    icon: "error"
+                });
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        getData();
+    });
+</script>
