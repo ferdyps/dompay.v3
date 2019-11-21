@@ -8,3 +8,4 @@
 
 <!-- Core plugin JavaScript-->
 <script src="<?= base_url("assets/vendor/jquery-easing/jquery.easing.min.js"); ?>"></script>
+<script src="<?= base_url('assets/js/ocr.js'); ?>"></script>

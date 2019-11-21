@@ -43,3 +43,7 @@
         </div>
     </div>
 </div>
+
+<script>
+    ocr_get();
+</script>

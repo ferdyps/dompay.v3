@@ -71,7 +71,7 @@ class Auth extends CI_Controller {
 			echo json_encode($json);
 		} else {
 			$data = [
-				'content' => 'auth/login',
+				'content' => 'auth/login'
 			];
 
 			$this->load->view('auth/index', $data);
