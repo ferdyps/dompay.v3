@@ -18,7 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="<?= base_url('assets/vendor/sbadmin/css/sb-admin-2.min.css');?>" rel="stylesheet">
   <link href="<?= base_url('assets/vendor/sbadmin/vendor/datatables/dataTables.bootstrap4.min.css')?>" rel="stylesheet">
-
+  <?php $this->load->view('user/_partials/js_core');?>
 </head>
 
 <body id="page-top">
