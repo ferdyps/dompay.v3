@@ -30,7 +30,7 @@
     function getData() {
         var no = 1;
         $.ajax({
-            url: "<?= base_url('user/get_accountBank'); ?>",
+            url: "<?= base_url('employees/get_accountBank'); ?>",
             type: "post",
             dataType: "json",
             async: true,

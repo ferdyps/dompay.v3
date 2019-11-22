@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('user'); ?>">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('owner'); ?>">
         <div class="sidebar-brand-icon">
             <!-- <i class="fas fa-money-bill-wave"></i> -->
             <img src="<?= base_url('assets/images/login.png')?>" width="100%"><img>
@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item <?php if($title == 'Dashboard') echo "active"; ?>">
-        <a class="nav-link" href="<?= base_url('user'); ?>">
+        <a class="nav-link" href="<?= base_url('owner'); ?>">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
@@ -30,7 +30,7 @@
 
     <!-- Nav Item - Collapse Menu -->
     <li class="nav-item  <?php if($title == 'Bank') echo "active"; ?>">
-        <a class="nav-link" href="<?= base_url('user/bank'); ?>">
+        <a class="nav-link" href="<?= base_url('owner/bank'); ?>">
             <i class="fas fa-fw fa-university"></i>
             <span>Bank</span>
         </a>
@@ -38,7 +38,7 @@
 
     <!-- Nav Item - Collapse Menu -->
     <li class="nav-item  <?php if($title == 'Mutasi') echo "active"; ?>">
-        <a class="nav-link" href="<?= base_url('user/mutasi'); ?>">
+        <a class="nav-link" href="<?= base_url('owner/mutasi'); ?>">
             <i class="fas fa-fw fa-sync-alt"></i>
             <span>Mutasi</span>
         </a>

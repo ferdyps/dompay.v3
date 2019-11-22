@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?= form_open('user/add_accountBank', ['id' => 'modal-form', 'log' => 'Tambah Akun Bank']); ?>
+      <?= form_open('employees/add_accountBank', ['id' => 'modal-form', 'log' => 'Tambah Akun Bank']); ?>
       <div class="modal-body">
           <div class="form-group form-input">
             <label for="input-nomorRek" class="col-form-label">Nomor Rekening :</label>
