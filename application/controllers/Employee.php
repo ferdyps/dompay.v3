@@ -1,7 +1,7 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
     
-    class Employees extends CI_Controller {
+    class Employee extends CI_Controller {
         public $id_account;
 // =============================================================
         public function __construct() {
@@ -19,29 +19,29 @@
 // =============================================================
         public function index() {
             $data = [
-                'content' => 'employees/dashboard',
+                'content' => 'employee/dashboard',
                 'title' => 'Dashboard'
             ];
 
-            $this->load->view('employees/index', $data);
+            $this->load->view('employee/index', $data);
         }
 
         public function bank() {
             $data = [
-                'content' => 'employees/bank',
+                'content' => 'employee/bank',
                 'title' => 'Bank'
             ];
 
-            $this->load->view('employees/index', $data);
+            $this->load->view('employee/index', $data);
         }
 
         public function mutasi() {
             $data = [
-                'content' => 'employees/mutasi',
+                'content' => 'employee/mutasi',
                 'title' => 'Mutasi',
                 'listDataAccount' => $this->account_model->viewByAcc($this->id_account)
             ];
-            $this->load->view('employees/index', $data);
+            $this->load->view('employee/index', $data);
         }
 // =============================================================
         public function add_accountBank() {
@@ -102,7 +102,7 @@
                 }
                 echo json_encode($json);
             } else {
-                redirect(base_url('employees/bank'),'refresh');
+                redirect(base_url('employee/bank'),'refresh');
             }
         }
 

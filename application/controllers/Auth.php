@@ -46,13 +46,27 @@ class Auth extends CI_Controller {
 					$array = [
 						'id' => $data_account->id,
 						'nama' => $data_account->nama,
+						'email' => $data_account->email,
+						'nohp' => $data_account->nohp,
+						'akses' => $data_account->akses,
+						'fitur' => $data_account->fitur,
 						'isLoggedIn' => true
 					];
+
+					if ($data_account->akses == 1) {
+						$url = base_url('superadmin');
+					} elseif ($data_account->akses == 2) {
+						$url = base_url('owner');
+					} else {
+						$array['id_owner'] = $data_account->id_owner;
+
+						$url = base_url('employee');
+					}
 					
 					$this->session->set_userdata($array);
 
 					$json = [
-						'url' => base_url('owner'),
+						'url' => $url,
 						'message' => 'Login Berhasil..'
 					];
 				} else {
@@ -118,7 +132,9 @@ class Auth extends CI_Controller {
 					'nama' => $nama,
 					'email' => $email,
 					'nohp' => $nohp,
-					'password' => $password
+					'password' => $password,
+					'akses' => 2,
+					'fitur' => 'All'
 				];
 
 				$query = $this->auth_model->register($data);

@@ -14,9 +14,7 @@
         }
 
         public function register($data) {
-            $data = $this->db->escape_str($data);
-
-            return $this->db->insert('users', $data);
+            return $this->add_data('users', $data);
         }
     }
 ?>

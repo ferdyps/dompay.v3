@@ -35,7 +35,6 @@
             $this->db->where($pk_field, $id);
             return $this->db->get($tabel);
         }
-    
-    }
-    
+
+    }  
 ?>

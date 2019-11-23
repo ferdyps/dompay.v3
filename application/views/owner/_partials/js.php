@@ -10,7 +10,3 @@
 <script src="<?= base_url('assets/vendor/SBAdmin/js/demo/chart-pie-demo.js')?>"></script>
 
 <script src="<?= base_url('assets/js/main.js'); ?>"></script>
-
-<script>
-    $('#dataTable').DataTable();
-</script>

@@ -45,6 +45,28 @@
     </li>
 
     <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+    Setting
+    </div>
+
+    <!-- Nav Item - Collapse Menu -->
+    <li class="nav-item <?php if($title == "Setting") echo "active"; ?>">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSetting" aria-expanded="true" aria-controls="collapseSetting">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Setting</span>
+        </a>
+        <div id="collapseSetting" class="collapse" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?= base_url('owner/list_employee');?>">Akun Employee</a>
+                <a class="collapse-item" href="<?= base_url('owner/settings');?>">All Setting</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->

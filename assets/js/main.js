@@ -1,3 +1,49 @@
+function delete_data(base_url, id) {
+    Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Setelah di hapus, anda tidak bisa melihat data tersebut..!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Ya, hapus saja !',
+        cancelButtonText: 'Tidak, batal !',
+        cancelButtonColor: '#3085d6',
+        confirmButtonColor: '#d33'
+    })
+    .then((result) => {
+        if(result.value) { 
+            $.ajax({
+                url: base_url + id,
+                type: "get",
+                data: id,
+                dataType: "json",
+                success:function(data){
+                    if ($.isEmptyObject(data.errors)) {
+                        Swal.fire({
+                            title: "Berhasil",
+                            text: data.message, 
+                            icon: "success"
+                        }).then(function() {
+                            getData();
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Gagal",
+                            text: data.errors, 
+                            icon: "error"
+                        });
+                    }
+                },
+                error:function(){
+                    Swal.fire({
+                        title: "Data Proses",
+                        text: "Error di System..!", 
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    });
+}
 // =============================================================
 $(document).ready(function () {
 // =============================================================
@@ -101,6 +147,9 @@ $(document).ready(function () {
                     });
                     if(log == "Tambah Akun Bank") {
                         $('#addAccountModal').modal('toggle');
+                        getData();
+                    } else if(log == "Tambah Akun Employee") {
+                        $('#addEmployeeModal').modal('toggle');
                         getData();
                     }
                 } else if(data.form_errors) {

@@ -43,3 +43,6 @@
         </div>
     </div>
 </div>
+<script>
+    $('#dataTable').DataTable();
+</script>
