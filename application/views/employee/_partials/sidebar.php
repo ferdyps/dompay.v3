@@ -37,12 +37,14 @@
     </li>
 
     <!-- Nav Item - Collapse Menu -->
+    <?php if(in_array('Debit', $this->fitur) || in_array('Kredit', $this->fitur)) { ?>
     <li class="nav-item  <?php if($title == 'Mutasi') echo "active"; ?>">
         <a class="nav-link" href="<?= base_url('employee/mutasi'); ?>">
             <i class="fas fa-fw fa-sync-alt"></i>
             <span>Mutasi</span>
         </a>
     </li>
+    <?php } ?>
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
