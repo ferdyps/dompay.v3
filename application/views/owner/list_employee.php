@@ -8,10 +8,18 @@
             <h6 class="mr-0 font-weight-bold text-primary">Data Akun Employee</h6>
         </div>
         <div class="card-body">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="spinner-grow text-primary d-none" id="table-loader" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <?php $this->load->view('owner/_partials/addEmployee_modal');?>
+<?php $this->load->view('owner/_partials/editEmployee_modal');?>
 <script>
     function getData() {
         var no = 1;
@@ -22,14 +30,10 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
-                $('.btn-submit').attr("disabled", true);
-                $('#status').removeClass("d-none");
-                $('#btn-text').addClass("d-none");
+                $('#table-loader').removeClass("d-none");
             },
             complete:function(){
-                $('.btn-submit').attr("disabled", false);
-                $('#status').addClass("d-none");
-                $('#btn-text').removeClass("d-none");
+                $('#table-loader').addClass("d-none");
             },
             success:function(data){
                 var innerHTML = `
@@ -52,7 +56,7 @@
                             <td class="text-center">${item.nama}</td>
                             <td class="text-center">${item.fitur}</td>
                             <td>
-                                <button class="btn btn-primary btn-sm shadow-sm" data-toggle="modal" data-target="#editEmployeeModal" data-id="${item.id}"><i class="fas fa-pen fa-sm"></i> Edit</button>
+                                <button class="btn btn-primary btn-sm shadow-sm" id="editEmployee" data-toggle="modal" data-target="#editEmployeeModal" data-id="${item.id}"><i class="fas fa-pen fa-sm"></i> Edit</button>
                                 <button class="btn btn-danger btn-sm shadow-sm" onclick="delete_data('<?= base_url('owner/delete_employee/'); ?>', ${item.id});"><i class="far fa-trash-alt fa-sm"></i> Delete</button>
                             </td>
                         </tr>
@@ -78,5 +82,40 @@
 
     $(document).ready(function() {
         getData();
+
+        $(document).on('click', '#editEmployee', function() {
+            var id = $(this).attr('data-id');
+            var url = "<?= base_url('owner/edit_employee/') ?>";
+            $.ajax({
+                url: url + id,
+                type: "get",
+                dataType: "json",
+                beforeSend:function() {
+                    $('#editEmployeeModal #input-nama').val("");
+                    $('#editEmployeeModal .form-check-input').attr('checked', false);
+                },
+                complete:function() {
+                    $('#loader-detail').addClass('d-none');
+                    $('#content-detail').removeClass('d-none');
+                },
+                success:function(data) {
+                    $('#editEmployeeModal form').attr("action", url + id);
+                    $('#editEmployeeModal #input-nama').val(data.nama);
+
+                    var fitur = data.fitur.split(', ');
+
+                    fitur.forEach(element => {
+                        $('#editEmployeeModal #input-' + element.toLowerCase()).attr('checked', true);;
+                    });
+                },
+                error:function() {
+                    swal({
+                        title: "Error",
+                        text: "Error di System..!",
+                        icon: "warning",
+                    });
+                }
+            });
+        });
     });
 </script>

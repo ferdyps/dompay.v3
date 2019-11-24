@@ -13,7 +13,13 @@ class Auth extends CI_Controller {
 		// include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
 
 		if ($this->session->userdata('isLoggedIn')) {
-			$url = base_url('owner');
+			if ($this->session->userdata('akses') == 1) {
+				$url = base_url('superadmin');
+			} else if($this->session->userdata('akses') == 2) {
+				$url = base_url('owner');
+			} else {
+				$url = base_url('employee');
+			}
 			header("Location: $url");
 		}
 	}

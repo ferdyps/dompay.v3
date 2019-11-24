@@ -17,6 +17,12 @@
             
             if (!$this->session->userdata('isLoggedIn')) {
                 redirect(base_url(), 'refresh');
+            } else {
+                if ($this->session->userdata('akses') == 1) {
+                    redirect(base_url('superadmin'), 'refresh');
+                } else if($this->session->userdata('akses') == 3) {
+                    redirect(base_url('employee'), 'refresh');
+                }
             }
         }
 // =============================================================
@@ -185,6 +191,54 @@
                 echo json_encode($json);
             } else {
                 redirect(base_url('owner/list_employee'),'refresh');
+            }
+        }
+
+        public function edit_employee($id) {
+            $this->form_validation->set_rules([
+                [
+                    'field' => 'nama',
+                    'label' => 'Nama',
+                    'rules' => 'trim|required'
+                ]
+            ]);
+
+            if ($this->input->post()) {
+                $nama = $this->input->post('nama');
+                $fitur = $this->input->post('fitur');
+
+                if ($fitur == NULL) {
+                    $json['errors'] = "Akun harus memiliki fitur..!";
+                } else {
+                    $fitur = implode(', ', $fitur);
+                    
+                    if ($this->form_validation->run() == TRUE) {
+                        $data = [
+                            'nama' => $nama,
+                            'fitur' => $fitur
+                        ];
+
+                        $query = $this->user_model->editEmployee($id, $data);
+
+                        if ($query) {
+                            $json['message'] = "Akun berhasil diubah..";
+                        } else {
+                            $json['errors'] = "Akun gagal diubah..!";
+                        }
+                    } else {
+                        $no = 0;
+                        foreach ($this->input->post() as $key => $value) {
+                            if (form_error($key) != "") {
+                                $json['form_errors'][$no]['id'] = $key;
+                                $json['form_errors'][$no]['msg'] = form_error($key, null, null);
+                                $no++;
+                            }
+                        }
+                    }
+                }
+                echo json_encode($json);
+            } else {
+                echo json_encode($this->user_model->selectEmployee($id));
             }
         }
 
