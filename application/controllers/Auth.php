@@ -27,9 +27,9 @@ class Auth extends CI_Controller {
 	public function index() {
 		$this->form_validation->set_rules([
 			[
-				'field' => 'email',
+				'field' => 'username',
 				'label' => 'Email',
-				'rules' => 'trim|required|valid_email'
+				'rules' => 'trim|required'
 			],
 			[
 				'field' => 'password', 
@@ -39,11 +39,11 @@ class Auth extends CI_Controller {
 		]);
 
 		if ($this->input->post()) {
-			$email = $this->input->post('email');
+			$username = $this->input->post('username');
 			$password = md5($this->input->post('password'));
 			
 			if ($this->form_validation->run() == TRUE) {
-				$query = $this->auth_model->login($email, $password);
+				$query = $this->auth_model->login($username, $password);
 				$data_account = $query->row();
 				$row = $query->num_rows();
 
@@ -106,6 +106,11 @@ class Auth extends CI_Controller {
 				'rules' => 'trim|required'
 			],
 			[
+				'field' => 'username',
+				'label' => 'Username',
+				'rules' => 'trim|required|is_unique[users.username]'
+			],
+			[
 				'field' => 'email',
 				'label' => 'Email',
 				'rules' => 'trim|required|valid_email|is_unique[users.email]'
@@ -127,8 +132,11 @@ class Auth extends CI_Controller {
 			]
 		]);
 
+		$this->form_validation->set_message('is_unique', '{field} is already being taken.');
+
 		if($this->input->post()) {
 			$nama = $this->input->post('nama');
+			$username = $this->input->post('username');
 			$email = $this->input->post('email');
 			$nohp = $this->input->post('nohp');
 			$password = md5($this->input->post('password'));
@@ -136,6 +144,7 @@ class Auth extends CI_Controller {
 			if ($this->form_validation->run() == TRUE) {
 				$data = [
 					'nama' => $nama,
+					'username' => $username,
 					'email' => $email,
 					'nohp' => $nohp,
 					'password' => $password,

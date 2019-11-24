@@ -17,26 +17,26 @@
           <div class="form-group form-input">
             <label class="col-form-label">Fitur :</label>
             <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Saldo" id="input-saldo">
-                <label class="form-check-label" for="input-saldo">
+                <input class="form-check-input" name="fitur[]" type="checkbox" value="Saldo" id="input-saldo-e">
+                <label class="form-check-label" for="input-saldo-e">
                     Saldo
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Dashboard" id="input-dashboard">
-                <label class="form-check-label" for="input-dashboard">
+                <input class="form-check-input" name="fitur[]" type="checkbox" value="Dashboard" id="input-dashboard-e">
+                <label class="form-check-label" for="input-dashboard-e">
                     Dashboard
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Debit" id="input-debit">
-                <label class="form-check-label" for="input-debit">
+                <input class="form-check-input" name="fitur[]" type="checkbox" value="Debit" id="input-debit-e">
+                <label class="form-check-label" for="input-debit-e">
                     Debit
                 </label>
             </div>
-            <div class="form-check input-fitur">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Kredit" id="input-kredit">
-                <label class="form-check-label" for="input-kredit">
+            <div class="form-check">
+                <input class="form-check-input" name="fitur[]" type="checkbox" value="Kredit" id="input-kredit-e">
+                <label class="form-check-label" for="input-kredit-e">
                     Kredit
                 </label>
             </div>

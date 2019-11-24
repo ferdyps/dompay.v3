@@ -25,6 +25,10 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-input">
+                            <input type="text" id="input-username" class="form-control" name="username" placeholder="Username">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-input">
                             <input type="text" id="input-email" class="form-control" name="email" placeholder="Email">
                             <div class="invalid-feedback"></div>
                         </div>

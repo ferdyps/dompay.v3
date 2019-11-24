@@ -42,6 +42,11 @@
             </div>
           </div>
           <div class="form-group form-input">
+            <label for="input-username" class="col-form-label">Username :</label>
+            <input type="text" name="username" class="form-control" id="input-username" placeholder="Username..">
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group form-input">
             <label for="input-password" class="col-form-label">Password :</label>
             <input type="password" name="password" class="form-control" id="input-password" placeholder="Password..">
             <div class="invalid-feedback"></div>

@@ -17,7 +17,7 @@
                     </div>
                     <?= form_open('', ['id' => 'default-form', 'log' => 'Login']); ?>
                         <div class="form-input">
-                            <input type="text" id="input-email" class="form-control" name="email" placeholder="Email" autofocus>
+                            <input type="text" id="input-username" class="form-control" name="username" placeholder="Username" autofocus>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-input">

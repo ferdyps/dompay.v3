@@ -3,11 +3,11 @@
     
     class Auth_Model extends MY_Model {
 
-        public function login($email, $password) {
-            $email = $this->db->escape($email);
+        public function login($username, $password) {
+            $username = $this->db->escape($username);
             $password = $this->db->escape($password);
             
-            $condition = "email = $email AND password = $password";
+            $condition = "username = $username AND password = $password";
             $this->db->where($condition);
             
             return $this->db->get('users');

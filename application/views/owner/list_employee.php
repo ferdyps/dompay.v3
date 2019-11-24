@@ -44,7 +44,7 @@
                                     <th width="5%">No</th>
                                     <th>Nama</th>
                                     <th>Fitur</th>
-                                    <th width="10%">Action</th>
+                                    <th width="20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>`;
@@ -55,7 +55,7 @@
                             <td class="text-center">${no++}</td>
                             <td class="text-center">${item.nama}</td>
                             <td class="text-center">${item.fitur}</td>
-                            <td>
+                            <td class="text-center">
                                 <button class="btn btn-primary btn-sm shadow-sm" id="editEmployee" data-toggle="modal" data-target="#editEmployeeModal" data-id="${item.id}"><i class="fas fa-pen fa-sm"></i> Edit</button>
                                 <button class="btn btn-danger btn-sm shadow-sm" onclick="delete_data('<?= base_url('owner/delete_employee/'); ?>', ${item.id});"><i class="far fa-trash-alt fa-sm"></i> Delete</button>
                             </td>

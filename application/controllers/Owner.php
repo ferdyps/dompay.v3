@@ -138,6 +138,11 @@
                     'rules' => 'trim|required'
                 ],
                 [
+                    'field' => 'username',
+                    'label' => 'Username',
+                    'rules' => 'trim|required|is_unique[users.username]'
+                ],
+                [
                     'field' => 'password',
                     'label' => 'Password', 
                     'rules' => 'trim|required'
@@ -149,8 +154,11 @@
                 ]
             ]);
 
+            $this->form_validation->set_message('is_unique', '{field} is already being taken.');
+
             if ($this->input->post()) {
                 $nama = $this->input->post('nama');
+                $username = $this->input->post('username');
                 $password = md5($this->input->post('password'));
                 $fitur = $this->input->post('fitur');
 
@@ -161,8 +169,8 @@
                     
                     if ($this->form_validation->run() == TRUE) {
                         $data = [
-                            'id_owner' => $this->id_account,
                             'nama' => $nama,
+                            'username' => $username,
                             'email' => $this->email,
                             'nohp' => $this->nohp,
                             'password' => $password,
@@ -170,7 +178,7 @@
                             'fitur' => $fitur
                         ];
 
-                        $query = $this->user_model->addEmployee($data);
+                        $query = $this->user_model->addEmployee($data, $this->id_account);
 
                         if ($query) {
                             $json['message'] = "Akun berhasil ditambah..";

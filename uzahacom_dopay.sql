@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2019 at 07:25 AM
+-- Generation Time: Nov 24, 2019 at 08:23 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -46,7 +46,8 @@ INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `t
 (6, 21, 'petrus_mandiri', 'petrus', '1234567890', 'Mandiri', ''),
 (7, 21, 'asd', 'asd', '123123123123', 'BCA', ''),
 (8, 21, 'petric', 'petric', '213123123132', 'BCA', ''),
-(9, 21, 'asddsa', 'asda', '1231231231231', 'Mandiri', '');
+(9, 21, 'asddsa', 'asda', '1231231231231', 'Mandiri', ''),
+(10, 30, 'petrusm', 'petrus', '01234567890', 'Mandiri', '');
 
 -- --------------------------------------------------------
 
@@ -67,6 +68,24 @@ INSERT INTO `akses` (`id`, `jenis_akses`) VALUES
 (1, 'Superadmin'),
 (2, 'Owner'),
 (3, 'Employee');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employees`
+--
+
+CREATE TABLE `employees` (
+  `id` int(11) NOT NULL,
+  `id_owner` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`id`, `id_owner`) VALUES
+(35, 30);
 
 -- --------------------------------------------------------
 
@@ -92,23 +111,48 @@ CREATE TABLE `mutasi` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
   `email` varchar(255) NOT NULL,
   `nohp` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `akses` int(1) NOT NULL,
-  `fitur` varchar(255) DEFAULT NULL,
-  `id_owner` int(11) DEFAULT NULL
+  `fitur` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nama`, `email`, `nohp`, `password`, `akses`, `fitur`, `id_owner`) VALUES
-(21, 'Petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8', 2, 'All', NULL),
-(22, 'Alex', 'alex@gmail.com', '081234567899', '534b44a19bf18d20b71ecc4eb77c572f', 2, 'All', NULL),
-(25, 'Jojon', 'petrus@gmail.com', '081234567890', 'b012694e87911f33173e85dd1e72a826', 3, 'Debit, Kredit', 21),
-(26, 'Petric', 'petrus@gmail.com', '081234567890', 'f88142be3868999471b29a191bc3aec5', 3, 'Dashboard', 21);
+INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
+(30, 'Petrus', 'petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8', 2, 'All'),
+(35, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '5e90ed910593294e3effbcbd755d2b19', 3, 'Saldo, Dashboard');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `vemployees`
+-- (See below for the actual view)
+--
+CREATE TABLE `vemployees` (
+`id` int(11)
+,`nama` varchar(100)
+,`username` varchar(100)
+,`email` varchar(255)
+,`nohp` varchar(20)
+,`password` varchar(255)
+,`akses` int(1)
+,`fitur` varchar(255)
+,`id_owner` int(11)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vemployees`
+--
+DROP TABLE IF EXISTS `vemployees`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vemployees`  AS  select `employees`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur`,`employees`.`id_owner` AS `id_owner` from (`users` join `employees` on((`users`.`id` = `employees`.`id`))) ;
 
 --
 -- Indexes for dumped tables
@@ -130,6 +174,13 @@ ALTER TABLE `akses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `employees`
+--
+ALTER TABLE `employees`
+  ADD KEY `id` (`id`),
+  ADD KEY `id_owner` (`id_owner`);
+
+--
 -- Indexes for table `mutasi`
 --
 ALTER TABLE `mutasi`
@@ -141,7 +192,7 @@ ALTER TABLE `mutasi`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_owner` (`id_owner`);
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -151,7 +202,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -169,7 +220,7 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
