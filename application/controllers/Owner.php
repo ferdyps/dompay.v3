@@ -7,7 +7,7 @@
         public function __construct() {
             parent::__construct();
 
-            $this->load->model(['account_model', 'mutasi_model', 'user_model']);
+            $this->load->model(['account_model', 'mutasi_model', 'employee_model']);
             $this->load->library('form_validation');
 
             $this->id_account = $this->session->userdata('id');
@@ -48,7 +48,7 @@
             $data = [
                 'content' => 'owner/mutasi',
                 'title' => 'Mutasi',
-                'listDataAccount' => $this->account_model->viewByAcc($this->id_account)
+                'listDataAccount' => $this->account_model->select($this->id_account)
             ];
 
             $this->load->view('owner/index', $data);
@@ -58,7 +58,7 @@
             $data = [
                 'content' => 'owner/list_employee',
                 'title' => 'Setting',
-                'listDataEmployee' => $this->user_model->viewEmployeeByOwner($this->id_account)
+                'listDataEmployee' => $this->employee_model->viewByOwner($this->id_account)
             ];
 
             $this->load->view('owner/index', $data);
@@ -74,17 +74,12 @@
                 [
                     'field' => 'username',
                     'label' => 'Username',
-                    'rules' => 'trim|required|is_unique[accounts.username]'
+                    'rules' => 'trim|required'
                 ],
                 [
                     'field' => 'password',
                     'label' => 'Password', 
                     'rules' => 'trim|required'
-                ],
-                [
-                    'field' => 'confirm_password', 
-                    'label' => 'Konfirmasi Password', 
-                    'rules' => 'trim|required|matches[password]'
                 ]
             ]);
 
@@ -127,7 +122,19 @@
         }
 
         public function get_accountBank() {
-            echo json_encode($this->account_model->viewByAcc($this->id_account));
+            echo json_encode($this->account_model->select($this->id_account));
+        }
+
+        public function delete_accountBank($id) {
+            $query = $this->account_model->delete($id);
+
+            if ($query) {
+                $json['message'] = 'Akun berhasil dihapus..!';
+            } else {
+                $json['errors'] = 'Akun gagal dihapus..!';
+            }
+
+            echo json_encode($json);
         }
 // =============================================================
         public function add_employee() {
@@ -178,7 +185,7 @@
                             'fitur' => $fitur
                         ];
 
-                        $query = $this->user_model->addEmployee($data, $this->id_account);
+                        $query = $this->employee_model->add($data, $this->id_account);
 
                         if ($query) {
                             $json['message'] = "Akun berhasil ditambah..";
@@ -215,6 +222,23 @@
                 $nama = $this->input->post('nama');
                 $fitur = $this->input->post('fitur');
 
+                if ($this->input->post('password') != NULL) {
+                    $this->form_validation->set_rules([
+                        [
+                            'field' => 'password',
+                            'label' => 'Password', 
+                            'rules' => 'trim|required'
+                        ],
+                        [
+                            'field' => 'confirm_password', 
+                            'label' => 'Konfirmasi Password', 
+                            'rules' => 'trim|required|matches[password]'
+                        ]
+                    ]);
+
+                    $password = md5($this->input->post('password'));
+                }
+
                 if ($fitur == NULL) {
                     $json['errors'] = "Akun harus memiliki fitur..!";
                 } else {
@@ -226,7 +250,11 @@
                             'fitur' => $fitur
                         ];
 
-                        $query = $this->user_model->editEmployee($id, $data);
+                        if ($this->input->post('password') != NULL) {
+                            $data['password'] = $password;
+                        }
+
+                        $query = $this->employee_model->edit($id, $data);
 
                         if ($query) {
                             $json['message'] = "Akun berhasil diubah..";
@@ -237,7 +265,7 @@
                         $no = 0;
                         foreach ($this->input->post() as $key => $value) {
                             if (form_error($key) != "") {
-                                $json['form_errors'][$no]['id'] = $key;
+                                $json['form_errors'][$no]['id'] = $key . '-e';
                                 $json['form_errors'][$no]['msg'] = form_error($key, null, null);
                                 $no++;
                             }
@@ -246,16 +274,16 @@
                 }
                 echo json_encode($json);
             } else {
-                echo json_encode($this->user_model->selectEmployee($id));
+                echo json_encode($this->employee_model->select($id));
             }
         }
 
         public function get_employee() {
-            echo json_encode($this->user_model->viewEmployeeByOwner($this->id_account));
+            echo json_encode($this->employee_model->viewByOwner($this->id_account));
         }
 
         public function delete_employee($id) {
-            $query = $this->user_model->deleteEmployee($id);
+            $query = $this->employee_model->delete($id);
 
             if ($query) {
                 $json['message'] = 'Akun berhasil dihapus..!';

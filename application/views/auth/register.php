@@ -16,32 +16,28 @@
                         <a href="<?= base_url('register') ?>" class="active">Register</a>
                     </div>
                     <?= form_open('', ['id' => 'default-form', 'log' => 'Register']); ?>
-                        <div class="form-input">
-                            <input type="text" id="input-nama" class="form-control" name="nama" placeholder="Nama" autofocus>
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="text" id="input-nama" class="form-control shadow" name="nama" placeholder="Nama" autofocus>
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <div class="form-input">
-                            <input type="text" id="input-nohp" class="form-control" name="nohp" placeholder="Nomor HP">
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="text" id="input-nohp" class="form-control shadow" name="nohp" placeholder="Nomor HP">
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <div class="form-input">
-                            <input type="text" id="input-username" class="form-control" name="username" placeholder="Username">
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="text" id="input-email" class="form-control shadow" name="email" placeholder="Email">
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <div class="form-input">
-                            <input type="text" id="input-email" class="form-control" name="email" placeholder="Email">
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="password" id="input-password" class="form-control shadow" name="password" placeholder="Password">
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <div class="form-input">
-                            <input type="password" id="input-password" class="form-control" name="password" placeholder="Password">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-input">
-                            <input type="password" id="input-confirm_password" class="form-control" name="confirm_password" placeholder="Konfirmasi Password">
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="password" id="input-confirm_password" class="form-control shadow" name="confirm_password" placeholder="Konfirmasi Password">
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
                         <div class="form-button">
-                            <button id="submit" type="submit" class="btn text-white" style="background-color:#dd4b39;">Register</button> 
+                            <button id="submit" type="submit" class="btn shadow text-white" style="background-color:#dd4b39;">Register</button> 
                         </div>
                     <?= form_close(); ?>
                 </div>

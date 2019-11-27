@@ -16,18 +16,16 @@
                         <a href="<?= base_url('register'); ?>">Register</a>
                     </div>
                     <?= form_open('', ['id' => 'default-form', 'log' => 'Login']); ?>
-                        <div class="form-input">
-                            <input type="text" id="input-username" class="form-control" name="username" placeholder="Username" autofocus>
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="text" id="input-username" class="form-control shadow" name="username" placeholder="Username" autofocus>
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <div class="form-input">
-                            <input type="password" id="input-password" class="form-control" name="password" placeholder="Password">
-                            <div class="invalid-feedback"></div>
+                        <div class="form-group form-input">
+                            <input type="password" id="input-password" class="form-control shadow" name="password" placeholder="Password">
+                            <div class="invalid-feedback text-warning"></div>
                         </div>
-                        <input type="checkbox" class="form-check-input" name="remember" value="1" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1"> Remember me</label>
                         <div class="form-button">
-                            <button id="submit" type="submit" class="ibtn">Login</button> 
+                            <button id="submit" type="submit" class="ibtn shadow">Login</button> 
                             <a href="<?= base_url('users/register/forgot_pass') ?>">
                                 Forget Password?
                             </a>

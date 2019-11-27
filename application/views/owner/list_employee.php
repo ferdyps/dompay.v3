@@ -85,31 +85,31 @@
 
         $(document).on('click', '#editEmployee', function() {
             var id = $(this).attr('data-id');
-            var url = "<?= base_url('owner/edit_employee/') ?>";
+            var url = "<?= base_url('owner/edit_employee/'); ?>";
             $.ajax({
                 url: url + id,
                 type: "get",
                 dataType: "json",
                 beforeSend:function() {
-                    $('#editEmployeeModal #input-nama').val("");
-                    $('#editEmployeeModal .form-check-input').attr('checked', false);
-                },
-                complete:function() {
-                    $('#loader-detail').addClass('d-none');
-                    $('#content-detail').removeClass('d-none');
+                    $('#editEmployeeModal input[type=text]').val('');
+                    $('#editEmployeeModal input[type=checkbox]').prop('checked', false);
+
+                    $('#editEmployeeModal #collapsePassword').collapse('hide');
+
+                    $('#editEmployeeModal input[type=password]').val('');
                 },
                 success:function(data) {
                     $('#editEmployeeModal form').attr("action", url + id);
-                    $('#editEmployeeModal #input-nama').val(data.nama);
+                    $('#editEmployeeModal #input-nama-e').val(data.nama);
 
                     var fitur = data.fitur.split(', ');
 
                     fitur.forEach(element => {
-                        $('#editEmployeeModal #input-' + element.toLowerCase()).attr('checked', true);;
+                        $('#editEmployeeModal #input-' + element.toLowerCase() + '-e').prop('checked', true);
                     });
                 },
                 error:function() {
-                    swal({
+                    Swal.fire({
                         title: "Error",
                         text: "Error di System..!",
                         icon: "warning",

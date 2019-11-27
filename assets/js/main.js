@@ -45,6 +45,11 @@ function delete_data(base_url, id) {
         }
     });
 }
+function input_reset() {
+    $('input[type=text]').val('');
+    $('input[type=password]').val('');
+    $('input[type=checkbox]').prop('checked', false);
+}
 function modal_form(content) {
     $('input').blur();
     event.preventDefault();
@@ -84,14 +89,15 @@ function modal_form(content) {
                 });
                 if(log == "Tambah Akun Bank") {
                     $('#addAccountModal').modal('toggle');
-                    getData();
+                    $('#addAccountModal select').val('Mandiri');
                 } else if(log == "Tambah Akun Employee") {
                     $('#addEmployeeModal').modal('toggle');
-                    getData();
                 } else if(log == "Edit Akun Employee") {
                     $('#editEmployeeModal').modal('toggle');
-                    getData();
+                    $('#editEmployeeModal #collapsePassword').collapse('hide');
                 }
+                getData();
+                input_reset();
             } else if(data.form_errors) {
                 for(var form_data in data.form_errors) {
                     $('#input-' + data.form_errors[form_data]['id']).addClass('is-invalid');

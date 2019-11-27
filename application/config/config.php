@@ -24,6 +24,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 $config['base_url']     = 'http://localhost/uzahacom/dompay.v3';
+$config['assets_url']   = $config['base_url'] . '/assets';
+$config['images_url']   = $config['assets_url'] . '/images';
+
 $config['web_title']	= "DomPAY - Dompet Digital Multi Finance";
 $config['web_footer']	= $config['web_title'] . " &copy; " . date('Y') . ". Version 1.0";
 

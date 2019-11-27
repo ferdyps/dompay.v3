@@ -10,6 +10,7 @@
         </div>
     </div>
 </div>
+<?php $this->load->view('employee/_partials/addAccount_modal');?>
 <script>
     function getData() {
         var no = 1;
@@ -39,7 +40,6 @@
                                 <th>Username</th>
                                 <th>Nomor Rekening</th>
                                 <th>Tipe Bank</th>
-                                <th width="10%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,7 +52,6 @@
                             <td class="text-center">${item.username}</td>
                             <td class="text-center">${item.no_rek}</td>
                             <td class="text-center">${item.typeBank}</td>
-                            <td class="text-center"><button class="btn btn-danger btn-sm shadow-sm" onclick=""><i class="far fa-trash-alt fa-sm"></i> Delete</button></td>
                         </tr>
                     `;
                 });

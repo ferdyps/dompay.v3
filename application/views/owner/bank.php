@@ -41,7 +41,7 @@
                                 <th>Username</th>
                                 <th>Nomor Rekening</th>
                                 <th>Tipe Bank</th>
-                                <th width="10%">Action</th>
+                                <th width="15%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,11 +50,13 @@
                 data.forEach(item => {
                     innerHTML += `
                         <tr>
-                            <td class="text-center">${no++}</td>
-                            <td class="text-center">${item.username}</td>
-                            <td class="text-center">${item.no_rek}</td>
-                            <td class="text-center">${item.typeBank}</td>
-                            <td class="text-center"><button class="btn btn-danger btn-sm shadow-sm" onclick=""><i class="far fa-trash-alt fa-sm"></i> Delete</button></td>
+                            <td class="text-center align-middle">${no++}</td>
+                            <td class="text-center align-middle">${item.username}</td>
+                            <td class="text-center align-middle">${item.no_rek}</td>
+                            <td class="text-center align-middle">${item.typeBank}</td>
+                            <td class="text-center align-middle">
+                                <button class="btn btn-danger btn-sm shadow-sm" onclick="delete_data('<?= base_url('owner/delete_accountBank/'); ?>', ${item.id_account});"><i class="far fa-trash-alt fa-sm"></i> Delete</button>
+                            </td>
                         </tr>
                     `;
                 });

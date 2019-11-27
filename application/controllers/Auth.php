@@ -6,8 +6,8 @@ class Auth extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 
-		$this->load->library(['form_validation']);
-		$this->load->model('auth_model');
+		$this->load->library('form_validation');
+		$this->load->model(['auth_model', 'employee_model']);
 		
 		// include_once APPPATH . "libraries/google-api-php-client/Google_Client.php";
 		// include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
@@ -52,8 +52,6 @@ class Auth extends CI_Controller {
 					$array = [
 						'id' => $data_account->id,
 						'nama' => $data_account->nama,
-						'email' => $data_account->email,
-						'nohp' => $data_account->nohp,
 						'akses' => $data_account->akses,
 						'fitur' => $data_account->fitur,
 						'isLoggedIn' => true
@@ -62,9 +60,14 @@ class Auth extends CI_Controller {
 					if ($data_account->akses == 1) {
 						$url = base_url('superadmin');
 					} elseif ($data_account->akses == 2) {
+						$array['email'] = $data_account->email;
+						$array['nohp'] = $data_account->nohp;
+						
 						$url = base_url('owner');
 					} else {
-						$array['id_owner'] = $data_account->id_owner;
+						$data_emp = $this->employee_model->select($data_account->id);
+
+						$array['id_owner'] = $data_emp->id_owner;
 
 						$url = base_url('employee');
 					}
@@ -106,11 +109,6 @@ class Auth extends CI_Controller {
 				'rules' => 'trim|required'
 			],
 			[
-				'field' => 'username',
-				'label' => 'Username',
-				'rules' => 'trim|required|is_unique[users.username]'
-			],
-			[
 				'field' => 'email',
 				'label' => 'Email',
 				'rules' => 'trim|required|valid_email|is_unique[users.email]'
@@ -136,7 +134,6 @@ class Auth extends CI_Controller {
 
 		if($this->input->post()) {
 			$nama = $this->input->post('nama');
-			$username = $this->input->post('username');
 			$email = $this->input->post('email');
 			$nohp = $this->input->post('nohp');
 			$password = md5($this->input->post('password'));
@@ -144,7 +141,7 @@ class Auth extends CI_Controller {
 			if ($this->form_validation->run() == TRUE) {
 				$data = [
 					'nama' => $nama,
-					'username' => $username,
+					'username' => $email,
 					'email' => $email,
 					'nohp' => $nohp,
 					'password' => $password,
@@ -155,11 +152,10 @@ class Auth extends CI_Controller {
 				$query = $this->auth_model->register($data);
 				
 				if ($query) {
-					$url = base_url();
 
 					$json = [
-						'message' => "Akun berhasil dibuat..",
-						'url' => $url
+						'url' => base_url(),
+						'message' => "Akun berhasil dibuat.."
 					];
 				} else {
 					$json['errors'] = "Akun gagal dibuat..!";

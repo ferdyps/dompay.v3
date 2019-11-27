@@ -2,36 +2,34 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class User_Model extends MY_Model {
-        protected $table = 'users', $table_emp = 'employees', $view_emp = 'vemployees';
+        protected $table = 'users', $view_owner = 'vowners';
 // =============================================================
-        public function addEmployee($data, $id_owner) {
-            $this->add_data($this->table, $data);
-            
-            $this->db->where('username', $data['username']);
-            $userdata = $this->db->get('users')->row();
-            
-            $data_emp = [
-                'id' => $userdata->id,
-                'id_owner' => $id_owner
-            ];
-
-            return $this->add_data($this->table_emp, $data_emp);
+        public function add($data) {
+            return $this->add_data($this->table, $data);
         }
 
-        public function selectEmployee($id) {
-            return $this->select_data($this->view_emp, 'id', $id)->row();
+        public function select($id = null) {
+            if ($id == null) {
+                return $this->view_data($this->table)->result_array();
+            } else {
+                return $this->select_data($this->table, 'id', $id)->row();
+            }
         }
 
-        public function editEmployee($id, $data) {
+        public function edit($id, $data) {
             return $this->edit_data($this->table, 'id', $id, $data);
         }
 
-        public function deleteEmployee($id) {
+        public function delete($id) {
             return $this->delete_data($this->table, 'id', $id);
         }
 // =============================================================
-        public function viewEmployeeByOwner($id) {
-            return $this->select_data($this->view_emp, 'id_owner', $id)->result_array();
+        public function selectAllOwner() {
+            return $this->view_data($this->view_owner)->result_array();
+        }
+
+        public function selectOwnerById($id) {
+            return $this->select_data($this->view_owner, 'id', $id);
         }
 // =============================================================
     }
