@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2019 at 08:23 AM
+-- Generation Time: Nov 27, 2019 at 03:11 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -43,11 +43,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `typeBank`, `saldo`) VALUES
-(6, 21, 'petrus_mandiri', 'petrus', '1234567890', 'Mandiri', ''),
-(7, 21, 'asd', 'asd', '123123123123', 'BCA', ''),
-(8, 21, 'petric', 'petric', '213123123132', 'BCA', ''),
-(9, 21, 'asddsa', 'asda', '1231231231231', 'Mandiri', ''),
-(10, 30, 'petrusm', 'petrus', '01234567890', 'Mandiri', '');
+(12, 30, 'petrus', '2213', '11002332211', 'Mandiri', '');
 
 -- --------------------------------------------------------
 
@@ -85,7 +81,7 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `id_owner`) VALUES
-(35, 30);
+(42, 30);
 
 -- --------------------------------------------------------
 
@@ -125,7 +121,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
 (30, 'Petrus', 'petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8', 2, 'All'),
-(35, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '5e90ed910593294e3effbcbd755d2b19', 3, 'Saldo, Dashboard');
+(42, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '21232f297a57a5a743894a0e4a801fc3', 3, 'Dashboard, Debit, Kredit'),
+(49, 'Zahid', 'zahidakhyar@gmail.com', 'zahidakhyar@gmail.com', '081250685820', 'c651148415ab2a260e6c506075c12ae3', 2, 'All');
 
 -- --------------------------------------------------------
 
@@ -148,11 +145,37 @@ CREATE TABLE `vemployees` (
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `vowners`
+-- (See below for the actual view)
+--
+CREATE TABLE `vowners` (
+`id` int(11)
+,`nama` varchar(100)
+,`username` varchar(100)
+,`email` varchar(255)
+,`nohp` varchar(20)
+,`password` varchar(255)
+,`akses` int(1)
+,`fitur` varchar(255)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `vemployees`
 --
 DROP TABLE IF EXISTS `vemployees`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vemployees`  AS  select `employees`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur`,`employees`.`id_owner` AS `id_owner` from (`users` join `employees` on((`users`.`id` = `employees`.`id`))) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vowners`
+--
+DROP TABLE IF EXISTS `vowners`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vowners`  AS  select `users`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur` from (`users` left join `employees` on((`users`.`id` = `employees`.`id`))) where isnull(`employees`.`id_owner`) ;
 
 --
 -- Indexes for dumped tables
@@ -202,7 +225,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -220,7 +243,7 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
