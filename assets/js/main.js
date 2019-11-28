@@ -235,7 +235,7 @@ function check_data_bank(content) {
         async: false,
         timeout: 40000,
         success:function(data){
-            if (Array.isArray(data)) {
+            if (Array.isArray(data) && data.length > 0) {
                 check = true;
             } else {
                 check = false;

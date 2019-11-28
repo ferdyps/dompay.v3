@@ -14,8 +14,9 @@
             <label for="input-typeBank" class="col-form-label">Tipe Bank :</label>
             <select name="typeBank" class="form-control" id="input-typeBank">
                 <option value="Mandiri">Mandiri</option>
-                <!-- <option value="BCA">BCA</option> -->
+                <option value="BCA">BCA</option>
                 <option value="BNI">BNI</option>
+                <option value="BRI">BRI</option>
             </select>
           </div>
           <div class="form-group form-input">
