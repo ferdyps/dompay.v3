@@ -60,8 +60,8 @@
               Show Password Form
         </button>
         <button type="submit" class="btn btn-primary btn-submit">
-            <span class="spinner-grow spinner-grow-sm d-none" id="status" role="status" aria-hidden="true"></span>
-            <span id="btn-text">Edit</span>
+          <span class="spinner-grow spinner-grow-sm align-middle d-none" id="status" role="status" aria-hidden="true"></span>
+          <span id="btn-text">Edit</span>
         </button>
       </div>
       <?= form_close(); ?>

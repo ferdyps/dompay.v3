@@ -15,8 +15,13 @@
                         </div>
                         <div class="col col-sm-12 col-md-auto">
                             <select id="dataAccount" class="form-control">
-                                <?php foreach ($listDataAccount as $data) { ?>
-                                    <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
+                                <?php 
+                                if ($listDataAccount != null) {
+                                    foreach ($listDataAccount as $data) { ?>
+                                        <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
+                                    <?php }
+                                } else { ?>
+                                    <option disabled selected>Tidak Ada</option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -25,6 +30,21 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center bg-primary text-white">
+                            <th width="5%">No</th>
+                            <th>Tanggal Mutasi</th>
+                            <th>Nominal</th>
+                            <th>Tipe Mutasi</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <script>$('#dataTable').DataTable();</script>
         </div>
     </div>
 </div>
@@ -149,12 +169,12 @@
         var username = $('#dataAccount').children('option:selected').attr('data-username');
         var password = $('#dataAccount').children('option:selected').attr('data-password');
 
-        getData(tipe, norek, username, password);
+        if (norek != "Tidak Ada") {
+            getData(tipe, norek, username, password);
+        }
     }
 
     $(document).ready(function() {
-        // startup();
-
         $('#dataAccount').change(function() {
             var norek = $(this).children('option:selected').val();
             var tipe = $(this).children('option:selected').attr('data-tipe');

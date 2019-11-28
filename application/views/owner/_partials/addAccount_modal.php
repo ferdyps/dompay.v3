@@ -38,7 +38,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary btn-submit">
-            <span class="spinner-grow spinner-grow-sm d-none" id="status" role="status" aria-hidden="true"></span>
+            <span class="spinner-grow spinner-grow-sm align-middle d-none" id="status" role="status" aria-hidden="true"></span>
             <span id="btn-text">Tambah</span>
         </button>
       </div>
