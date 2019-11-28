@@ -129,6 +129,10 @@
                     image = "<?= config_item('images_url') . '/bank/bni.png'; ?>";
                 } else if(bank == "Mandiri") {
                     image = "<?= config_item('images_url') . '/bank/mandiri.png'; ?>";
+                } else if(bank == "BRI") {
+                    image = "<?= config_item('images_url') . '/bank/bri.png'; ?>";
+                } else if(bank == "BCA") {
+                    image = "<?= config_item('images_url') . '/bank/bca.png'; ?>";
                 }
 
                 $('div#logo-mutasi').html(`<img src="` + image + `" class="w-100">`);
