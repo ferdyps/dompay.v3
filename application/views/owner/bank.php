@@ -25,12 +25,15 @@
             type: "post",
             dataType: "json",
             async: true,
-            timeout: 40000,
+            timeout: 100000,
             beforeSend:function(){
-                $('#table-loader').removeClass("d-none");
-            },
-            complete:function(){
-                $('#table-loader').addClass("d-none");
+                $('.card-body').html(`
+                <div class="col text-center">
+                    <div class="spinner-grow text-primary" id="table-loader" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                `);
             },
             success:function(data){
                 var innerHTML = `

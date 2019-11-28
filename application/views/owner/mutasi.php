@@ -25,23 +25,22 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="col text-center">
-                <div class="spinner-grow text-primary d-none" id="table-loader" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 <script>
     function getData(bank, req, username, password) {
         var no = 1;
-        var base_url;
+        var base_url, image;
 
         if (bank == "Mandiri") {
-            base_url = "http://uzaha.com/restapi/api/mandiri/saldo?bank=mandiri&req=" + req + "&user=" + username +"&pass=" + password +"";
+            base_url = "http://uzaha.com/restapi/api/mandiri?bank=mandiri&req=" + req + "&user=" + username +"&pass=" + password +"";
         } else if (bank == "BNI") {
             base_url = "http://uzaha.com/restapi/api/bni?bank=bni&req=" + req + "&user=" + username + "&pass=" + password +"";
+        } else if (bank == "BRI") {
+            base_url = "http://uzaha.com/restapi/api/bri?bank=bri&req=" + req + "&user=" + username + "&pass=" + password +"";
+        } else if (bank == "BCA") {
+            base_url = "http://uzaha.com/restapi/api/bca?bank=bca&req=" + req + "&user=" + username + "&pass=" + password +"";
         }
 
         $.ajax({
@@ -54,10 +53,13 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
-                $('#table-loader').removeClass("d-none");
-            },
-            complete:function(){
-                $('#table-loader').addClass("d-none");
+                $('.card-body').html(`
+                <div class="col text-center">
+                    <div class="spinner-grow text-primary" id="table-loader" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                `);
             },
             success:function(data){
                 var innerHTML = `
@@ -76,36 +78,60 @@
                       `;
                 
                 data.forEach(item => {
-                    if (bank == "BNI") {
+                    var tipeMutasi, nominal;
+
+                    if (bank == "BNI" || bank == "BCA") {
+                        nominal = item.nominal;
                         if (item.type == "DB") {
-                            item.type = "Debit";
+                            tipeMutasi = "Debit";
                         } else {
-                            item.type = "Kredit";
+                            tipeMutasi = "Kredit";
+                        }
+                    } else if(bank == "Mandiri" || bank == "BRI") {
+                        if (item.debit == 0) {
+                            tipeMutasi = "Kredit";
+                            nominal = item.kredit;
+                        } else {
+                            tipeMutasi = "Debit"
+                            nominal = item.debit;
                         }
                     }
                     
                     innerHTML += `
-                        <tr>
-                            <td class="text-center align-middle">${no++}</td>
-                            <td class="text-center align-middle">${item.tanggal}</td>
-                            <td class="text-center align-middle">${item.nominal}</td>
-                            <td class="text-center align-middle">${item.type}</td>
-                            <td class="text-center align-middle">${item.keterangan}</td>
-                        </tr>
+                    <tr>
+                        <td class="text-center align-middle">${no++}</td>
+                        <td class="text-center align-middle">${item.tanggal}</td>
+                        <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
+                        <td class="text-center align-middle">${tipeMutasi}</td>
+                        <td class="text-center align-middle">${item.keterangan}</td>
+                    </tr>
                     `;
                 });
 
                 innerHTML += `</tbody></table></div>`;
 
                 $('.card-body').html(innerHTML);
-                $('#dataTable').DataTable();
+                $('#dataTable').DataTable({
+                    "dom": `
+                        <"row" 
+                            <"col-sm-12 col-md-5 mt-auto" l>
+                            <"col-sm-12 col-md-5 mt-auto" f>
+                            <"#logo-mutasi.col-sm-12 col-md-2 align-middle">
+                        >
+                        <"row" <"col-sm-12" t>>
+                        <"row" 
+                            <"col-sm-12 col-md-5" i>
+                            <"col-sm-12 col-md-7" p>
+                        >`,
+                });
 
-                $('#dataTable_wrapper row > col-sm-12').removeClass('col-md-6');
-                $('#dataTable_wrapper row > col-sm-12').addClass('col-md-4');
-                $('#dataTable_wrapper row').append(`
-                <div class='col-sm-12 col-md-4'>
-                    test
-                </div>`);
+                if (bank == "BNI") {
+                    image = "<?= config_item('images_url') . '/bank/bni.png'; ?>";
+                } else if(bank == "Mandiri") {
+                    image = "<?= config_item('images_url') . '/bank/mandiri.png'; ?>";
+                }
+
+                $('div#logo-mutasi').html(`<img src="` + image + `" class="w-100">`);
             },
             error:function(){
                 check = false;

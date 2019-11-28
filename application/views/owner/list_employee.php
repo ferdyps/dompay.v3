@@ -8,13 +8,6 @@
             <h6 class="mr-0 font-weight-bold text-primary">Data Akun Employee</h6>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="col text-center">
-                    <div class="spinner-grow text-primary d-none" id="table-loader" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -30,10 +23,13 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
-                $('#table-loader').removeClass("d-none");
-            },
-            complete:function(){
-                $('#table-loader').addClass("d-none");
+                $('.card-body').html(`
+                <div class="col text-center">
+                    <div class="spinner-grow text-primary" id="table-loader" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                `);
             },
             success:function(data){
                 var innerHTML = `

@@ -216,7 +216,7 @@ function check_data_bank(content) {
     var password = formData.get('password');
 
     if (tipeBank == "Mandiri") {
-        base_url = "http://uzaha.com/restapi/api/mandiri/saldo?bank=mandiri&req=" + nomorRek + "&user=" + username +"&pass=" + password +"";
+        base_url = "http://uzaha.com/restapi/api/mandiri?bank=mandiri&req=" + nomorRek + "&user=" + username +"&pass=" + password +"";
     } else if (tipeBank == "BNI") {
         base_url = "http://uzaha.com/restapi/api/bni?bank=bni&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
     }
