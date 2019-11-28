@@ -7,13 +7,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?= form_open('owner/add_accountBank', ['id' => 'modal-form', 'log' => 'Tambah Akun Bank']); ?>
+      <?= form_open('owner/add_accountBank', ['id' => 'modal-form-bank', 'log' => 'Tambah Akun Bank']); ?>
       <div class="modal-body">
+          <input type="hidden" id="input-data" name="data" value="tidak ada">
           <div class="form-group form-input">
             <label for="input-typeBank" class="col-form-label">Tipe Bank :</label>
             <select name="typeBank" class="form-control" id="input-typeBank">
                 <option value="Mandiri">Mandiri</option>
-                <option value="BCA">BCA</option>
+                <!-- <option value="BCA">BCA</option> -->
+                <option value="BNI">BNI</option>
             </select>
           </div>
           <div class="form-group form-input">

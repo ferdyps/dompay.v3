@@ -8,6 +8,11 @@
             <h6 class="mr-0 font-weight-bold text-primary">Data Akun Bank</h6>
         </div>
         <div class="card-body">
+            <div class="col text-center">
+                <div class="spinner-grow text-primary d-none" id="table-loader" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -22,14 +27,10 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
-                $('.btn-submit').attr("disabled", true);
-                $('#status').removeClass("d-none");
-                $('#btn-text').addClass("d-none");
+                $('#table-loader').removeClass("d-none");
             },
             complete:function(){
-                $('.btn-submit').attr("disabled", false);
-                $('#status').addClass("d-none");
-                $('#btn-text').removeClass("d-none");
+                $('#table-loader').addClass("d-none");
             },
             success:function(data){
                 var innerHTML = `

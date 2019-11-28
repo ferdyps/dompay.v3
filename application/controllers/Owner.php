@@ -69,7 +69,7 @@
                 [
                     'field' => 'nomorRek',
                     'label' => 'Nomor Rekening',
-                    'rules' => 'trim|required|numeric|min_length[10]|max_length[16]|is_unique[accounts.no_rek]'
+                    'rules' => 'trim|required|numeric|min_length[10]|max_length[30]'
                 ],
                 [
                     'field' => 'username',
@@ -90,20 +90,24 @@
                 $typeBank = $this->input->post('typeBank');
                 
                 if ($this->form_validation->run() == TRUE) {
-                    $data = [
-                        'id' => $this->id_account,
-                        'username' => $username,
-                        'password' => $password,
-                        'no_rek' => $no_rek,
-                        'typeBank' => $typeBank
-                    ];
-
-                    $query = $this->account_model->add($data);
-
-                    if ($query) {
-                        $json['message'] = "Akun berhasil ditambah..";
+                    if ($this->input->post('data') == "ada") {
+                        $data = [
+                            'id' => $this->id_account,
+                            'username' => $username,
+                            'password' => $password,
+                            'no_rek' => $no_rek,
+                            'typeBank' => $typeBank
+                        ];
+    
+                        $query = $this->account_model->add($data);
+    
+                        if ($query) {
+                            $json['message'] = "Akun berhasil ditambah..";
+                        } else {
+                            $json['errors'] = "Akun gagal ditambah..!";
+                        }
                     } else {
-                        $json['errors'] = "Akun gagal ditambah..!";
+                        $json['check'] = 'cek';
                     }
                 } else {
                     $no = 0;
