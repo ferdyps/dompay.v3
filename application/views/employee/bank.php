@@ -37,7 +37,6 @@
                         <thead>
                             <tr class="text-center bg-primary text-white">
                                 <th width="5%">No</th>
-                                <th>Username</th>
                                 <th>Nomor Rekening</th>
                                 <th>Tipe Bank</th>
                             </tr>
@@ -49,7 +48,6 @@
                     innerHTML += `
                         <tr>
                             <td class="text-center">${no++}</td>
-                            <td class="text-center">${item.username}</td>
                             <td class="text-center">${item.no_rek}</td>
                             <td class="text-center">${item.typeBank}</td>
                         </tr>

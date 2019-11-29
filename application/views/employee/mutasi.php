@@ -53,6 +53,7 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
+                $('#dataAccount').attr('disabled', true);
                 $('.card-body').html(`
                 <div class="col text-center">
                     <div class="spinner-grow text-primary" id="table-loader" role="status">
@@ -60,6 +61,9 @@
                     </div>
                 </div>
                 `);
+            },
+            complete:function(){
+                $('#dataAccount').attr('disabled', false);
             },
             success:function(data){
                 var innerHTML = `
@@ -77,36 +81,73 @@
                         <tbody>
                       `;
                 
-                data.forEach(item => {
+                for (let index = 0; index < data.length; index++) {
                     var tipeMutasi, nominal;
 
-                    if (bank == "BNI" || bank == "BCA") {
-                        nominal = item.nominal;
-                        if (item.type == "DB") {
-                            tipeMutasi = "Debit";
-                        } else {
-                            tipeMutasi = "Kredit";
+                    <?php 
+                    if(in_array('Debit', $this->fitur) && in_array('Kredit', $this->fitur)) { ?>
+                        if (bank == "BNI" || bank == "BCA") {
+                            nominal = data[index]['nominal'];
+                            if (data[index]['type'] == "DB") {
+                                tipeMutasi = "Debit";
+                            } else {
+                                tipeMutasi = "Kredit";
+                            }
+                        } else if(bank == "Mandiri" || bank == "BRI") {
+                            if (data[index]['debit'] == 0) {
+                                tipeMutasi = "Kredit";
+                                nominal = data[index]['kredit'];
+                            } else {
+                                tipeMutasi = "Debit"
+                                nominal = data[index]['debit'];
+                            }
                         }
-                    } else if(bank == "Mandiri" || bank == "BRI") {
-                        if (item.debit == 0) {
-                            tipeMutasi = "Kredit";
-                            nominal = item.kredit;
-                        } else {
-                            tipeMutasi = "Debit"
-                            nominal = item.debit;
+                    <?php 
+                    } else if(in_array('Debit', $this->fitur)) { ?>
+                        if (bank == "BNI" || bank == "BCA") {
+                            if (data[index]['type'] == "DB") {
+                                tipeMutasi = "Debit";
+                                nominal = data[index]['nominal'];
+                            } else {
+                                continue;
+                            }
+                        } else if(bank == "Mandiri" || bank == "BRI") {
+                            if (data[index]['debit'] == 0) {
+                                continue;
+                            } else {
+                                tipeMutasi = "Debit"
+                                nominal = data[index]['debit'];
+                            }
                         }
-                    }
+                    <?php 
+                    } else if(in_array('Kredit', $this->fitur)) { ?>
+                        if (bank == "BNI" || bank == "BCA") {
+                            if (data[index]['type'] == "DB") {
+                                continue;
+                            } else {
+                                tipeMutasi = "Kredit";
+                                nominal = data[index]['nominal'];
+                            }
+                        } else if(bank == "Mandiri" || bank == "BRI") {
+                            if (data[index]['debit'] == 0) {
+                                tipeMutasi = "Kredit";
+                                nominal = data[index]['kredit'];
+                            } else {
+                                continue;
+                            }
+                        }
+                    <?php } ?>
                     
                     innerHTML += `
                     <tr>
                         <td class="text-center align-middle">${no++}</td>
-                        <td class="text-center align-middle">${item.tanggal}</td>
+                        <td class="text-center align-middle">${data[index]['tanggal']}</td>
                         <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
                         <td class="text-center align-middle">${tipeMutasi}</td>
-                        <td class="text-center align-middle">${item.keterangan}</td>
+                        <td class="text-center align-middle">${data[index]['keterangan']}</td>
                     </tr>
                     `;
-                });
+                }
 
                 innerHTML += `</tbody></table></div>`;
 

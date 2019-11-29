@@ -73,6 +73,7 @@
             async: true,
             timeout: 40000,
             beforeSend:function(){
+                $('#dataAccount').attr('disabled', true);
                 $('.card-body').html(`
                 <div class="col text-center">
                     <div class="spinner-grow text-primary" id="table-loader" role="status">
@@ -80,6 +81,9 @@
                     </div>
                 </div>
                 `);
+            },
+            complete:function(){
+                $('#dataAccount').attr('disabled', false);
             },
             success:function(data){
                 var innerHTML = `

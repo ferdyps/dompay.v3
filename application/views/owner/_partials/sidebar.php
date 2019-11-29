@@ -61,7 +61,7 @@
         <div id="collapseSetting" class="collapse" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<?= base_url('owner/list_employee');?>">Akun Employee</a>
-                <a class="collapse-item" href="<?= base_url('owner/settings');?>">All Setting</a>
+                <!-- <a class="collapse-item" href="<?= base_url('owner/settings');?>">All Setting</a> -->
             </div>
         </div>
     </li>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2019 at 03:11 PM
+-- Generation Time: Nov 29, 2019 at 01:08 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -43,7 +43,7 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `typeBank`, `saldo`) VALUES
-(12, 30, 'petrus', '2213', '11002332211', 'Mandiri', '');
+(13, 30, 'nurul201', 'dollies96', '00000000843684048', 'BNI', '');
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
 (30, 'Petrus', 'petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8', 2, 'All'),
-(42, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '21232f297a57a5a743894a0e4a801fc3', 3, 'Dashboard, Debit, Kredit'),
+(42, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '5e90ed910593294e3effbcbd755d2b19', 3, 'Saldo, Dashboard, Kredit'),
 (49, 'Zahid', 'zahidakhyar@gmail.com', 'zahidakhyar@gmail.com', '081250685820', 'c651148415ab2a260e6c506075c12ae3', 2, 'All');
 
 -- --------------------------------------------------------
@@ -186,7 +186,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id_account`),
-  ADD UNIQUE KEY `username` (`username`),
   ADD UNIQUE KEY `no_rek` (`no_rek`),
   ADD KEY `id` (`id`);
 
@@ -225,7 +224,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -243,7 +242,7 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables

@@ -246,6 +246,63 @@ function check_data_bank(content) {
         }
     });
 }
+
+function getSaldoBank(bank, req, username, password) {
+    var base_url;
+
+    if (bank == "Mandiri") {
+        base_url = "http://uzaha.com/restapi/api/mandiri/saldo?bank=mandiri&req=" + req + "&user=" + username +"&pass=" + password +"";
+    } else if (bank == "BNI") {
+        base_url = "http://uzaha.com/restapi/api/bni/saldo?bank=bni&req=" + req + "&user=" + username + "&pass=" + password +"";
+    } else if (bank == "BRI") {
+        base_url = "http://uzaha.com/restapi/api/bri/saldo?bank=bri&req=" + req + "&user=" + username + "&pass=" + password +"";
+    } else if (bank == "BCA") {
+        base_url = "http://uzaha.com/restapi/api/bca/saldo?bank=bca&req=" + req + "&user=" + username + "&pass=" + password +"";
+    }
+
+    $.ajax({
+        url: base_url,
+        type: "get",
+        data: {req:req, user:username, pass:password},
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        async: true,
+        timeout: 40000,
+        beforeSend:function(){
+            $('#dataAccount-saldo').attr('disabled', true);
+            $('#dataSaldo').html(`
+            <div class="spinner-grow spinner-grow-sm text-primary" id="table-loader" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            `);
+        },
+        complete:function(){
+            $('#dataAccount-saldo').attr('disabled', false);
+        },
+        success:function(data){
+            $('#dataSaldo').html('Saldo : Rp. '+ numeral(data).format('0,0'));
+        },
+        error:function() {
+            $('#dataSaldo').html('Error');
+        }
+    });
+}
+
+function startupSaldoBank() {
+    var norek = $('#dataAccount-saldo').children('option:selected').val();
+    var tipe = $('#dataAccount-saldo').children('option:selected').attr('data-tipe');
+    var username = $('#dataAccount-saldo').children('option:selected').attr('data-username');
+    var password = $('#dataAccount-saldo').children('option:selected').attr('data-password');
+
+    if (norek != "Tidak Ada") {
+        getSaldoBank(tipe, norek, username, password);
+    }
+}
+
+$(window).on('load', function() {
+    startupSaldoBank();
+});
 // =============================================================
 $(document).ready(function () {
 // =============================================================
@@ -320,6 +377,15 @@ $(document).ready(function () {
 
     $('#modal-form-2').submit(function() {
         modal_form(this);
+    });
+// =============================================================    
+    $('#dataAccount-saldo').change(function() {
+        var norek = $(this).children('option:selected').val();
+        var tipe = $(this).children('option:selected').attr('data-tipe');
+        var username = $(this).children('option:selected').attr('data-username');
+        var password = $(this).children('option:selected').attr('data-password');
+
+        getSaldoBank(tipe, norek, username, password);
     });
 // =============================================================
     $('form input').on('keyup', function () {

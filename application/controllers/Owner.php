@@ -2,7 +2,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class Owner extends CI_Controller {
-        public $id_account, $email, $nama, $nohp;
+        public $id_account, $email, $nama, $nohp, $dataAccount;
 // =============================================================
         public function __construct() {
             parent::__construct();
@@ -14,6 +14,8 @@
             $this->email = $this->session->userdata('email');
             $this->nama = $this->session->userdata('nama');
             $this->nohp = $this->session->userdata('nohp');
+
+            $this->dataAccount = $this->account_model->select($this->id_account);
             
             if (!$this->session->userdata('isLoggedIn')) {
                 redirect(base_url(), 'refresh');
@@ -69,7 +71,7 @@
                 [
                     'field' => 'nomorRek',
                     'label' => 'Nomor Rekening',
-                    'rules' => 'trim|required|numeric|min_length[10]|max_length[30]'
+                    'rules' => 'trim|required|numeric|min_length[10]|max_length[30]|is_unique[accounts.no_rek]'
                 ],
                 [
                     'field' => 'username',

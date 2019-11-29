@@ -2,7 +2,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class Employee extends CI_Controller {
-        public $id_account, $id_owner, $nama, $fitur;
+        public $id_account, $id_owner, $nama, $fitur, $dataAccount;
 // =============================================================
         public function __construct() {
             parent::__construct();
@@ -15,6 +15,10 @@
             $this->nama = $this->session->userdata('nama');
 
             $this->fitur = explode(', ', $this->session->userdata('fitur'));
+
+            if (in_array('Saldo', $this->fitur)) {
+                $this->dataAccount = $this->account_model->select($this->id_owner);
+            }
             
             if (!$this->session->userdata('isLoggedIn')) {
                 redirect(base_url(), 'refresh');
