@@ -26,7 +26,11 @@ function delete_data(base_url, id) {
                             text: data.message, 
                             icon: "success"
                         }).then(function() {
-                            getData();
+                            if (base_url.substring(base_url.lastIndexOf('_') + 1) == "accountBank/") {
+                                location.reload();
+                            } else {
+                                getData();
+                            }
                         });
                     } else {
                         Swal.fire({
@@ -160,16 +164,11 @@ function modal_form_bank(content) {
                     title: "Berhasil",
                     text: data.message, 
                     icon: "success"
+                }).then(function() {
+                    location.reload();
                 });
-
-                $('#addAccountModal').modal('toggle');
-                $('#addAccountModal select').val('Mandiri');
-
-                getData();
-                input_reset();
             } else if(data.check) {
                 check_data_bank(content);
-                console.log("Result : " + check);
                 if (check) {
                     $('#addAccountModal #input-data').val('ada');
                     modal_form_bank(content);
@@ -281,10 +280,14 @@ function getSaldoBank(bank, req, username, password) {
             $('#dataAccount-saldo').attr('disabled', false);
         },
         success:function(data){
+            $('#dataSaldo').addClass('mt-2');
             $('#dataSaldo').html('Saldo : Rp. '+ numeral(data).format('0,0'));
         },
         error:function() {
-            $('#dataSaldo').html('Error');
+            $('#dataSaldo').html(`
+                <button class="btn btn-primary" onClick="startupSaldoBank();">Refresh</button>
+            `);
+            $('#dataSaldo').removeClass('mt-2');
         }
     });
 }

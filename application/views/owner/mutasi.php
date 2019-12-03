@@ -5,15 +5,15 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="row">
-                <div class="col col-sm-12 col-md-auto mr-auto">
+                <div class="col-sm-12 col-md-auto mr-auto">
                     <h6 class="mr-auto font-weight-bold text-primary mt-2">Data Mutasi</h6>
                 </div>
-                <div class="col col-sm-12 col-md-auto">
+                <div class="col-sm-12 col-md-auto">
                     <div class="row">
-                        <div class="col col-sm-12 col-md-auto">
+                        <div class="col-sm-12 col-md-auto">
                             <label for="dataAccount" class="mt-2">Pilih Data Bank :</label>
                         </div>
-                        <div class="col col-sm-12 col-md-auto">
+                        <div class="col-sm-12 col-md-auto">
                             <select id="dataAccount" class="form-control">
                                 <?php 
                                 if ($listDataAccount != null) {
@@ -24,6 +24,9 @@
                                     <option disabled selected>Tidak Ada</option>
                                 <?php } ?>
                             </select>
+                        </div>
+                        <div class="col-sm-12 mt-sm-2 mt-md-0 p-0 col-md-auto">
+                            <button class="btn btn-primary" id="refreshMutasi" onclick="startup();">Refresh</button>
                         </div>
                     </div>
                 </div>
@@ -74,6 +77,7 @@
             timeout: 40000,
             beforeSend:function(){
                 $('#dataAccount').attr('disabled', true);
+                $('#refreshMutasi').attr('disabled', true);
                 $('.card-body').html(`
                 <div class="col text-center">
                     <div class="spinner-grow text-primary" id="table-loader" role="status">
@@ -84,6 +88,7 @@
             },
             complete:function(){
                 $('#dataAccount').attr('disabled', false);
+                $('#refreshMutasi').attr('disabled', false);
             },
             success:function(data){
                 var innerHTML = `
