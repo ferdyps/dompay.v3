@@ -22,6 +22,8 @@
   <link href="<?= base_url("assets/vendor/select2-4.0.12/css/select2.min.css"); ?>" rel="stylesheet" >
   <link href="<?= base_url("assets/vendor/select2-4.0.12/css/select2-bootstrap4.min.css"); ?>" rel="stylesheet" >
 
+  <link href="<?= base_url('assets/css/pace.css');?>" rel="stylesheet">
+
   <?php $this->load->view('employee/_partials/js_core');?>
 </head>
 
