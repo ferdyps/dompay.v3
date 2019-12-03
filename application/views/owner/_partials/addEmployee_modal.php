@@ -15,31 +15,13 @@
             <div class="invalid-feedback"></div>
           </div>
           <div class="form-group form-input">
-            <label class="col-form-label">Fitur :</label>
-            <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Saldo" id="input-saldo">
-                <label class="form-check-label" for="input-saldo">
-                    Saldo
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Dashboard" id="input-dashboard">
-                <label class="form-check-label" for="input-dashboard">
-                    Dashboard
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Debit" id="input-debit">
-                <label class="form-check-label" for="input-debit">
-                    Debit
-                </label>
-            </div>
-            <div class="form-check input-fitur">
-                <input class="form-check-input" name="fitur[]" type="checkbox" value="Kredit" id="input-kredit">
-                <label class="form-check-label" for="input-kredit">
-                    Kredit
-                </label>
-            </div>
+            <label for="input-fitur">Fitur :</label>
+            <select name="fitur[]" class="form-control" id="input-fitur" multiple="multiple">
+              <option value="Saldo">Saldo</option>
+              <option value="Dashboard">Dashboard</option>
+              <option value="Kredit">Kredit</option>
+              <option value="Debit">Debit</option>
+            </select>
           </div>
           <div class="form-group form-input">
             <label for="input-username" class="col-form-label">Username :</label>

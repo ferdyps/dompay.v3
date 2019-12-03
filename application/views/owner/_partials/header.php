@@ -19,6 +19,11 @@
   <!-- Custom styles for this template-->
   <link href="<?= base_url('assets/vendor/sbadmin/css/sb-admin-2.min.css');?>" rel="stylesheet">
   <link href="<?= base_url('assets/vendor/sbadmin/vendor/datatables/dataTables.bootstrap4.min.css')?>" rel="stylesheet">
+  
+  <link rel="stylesheet" href="<?= base_url("assets/vendor/select2-4.0.12/css/select2.min.css"); ?>">
+  <link rel="stylesheet" href="<?= base_url("assets/vendor/select2-4.0.12/css/select2-bootstrap4.min.css"); ?>">
+
+
   <?php $this->load->view('owner/_partials/js_core');?>
 </head>
 

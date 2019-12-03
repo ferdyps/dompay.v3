@@ -56,6 +56,9 @@ function input_reset() {
     $('input[type=hidden]').val('');
     $('input[type=text]').val('');
     $('input[type=password]').val('');
+    
+    $('select[id^="input-fitur"]').val(null).trigger('change');
+
     $('input[type=checkbox]').prop('checked', false);
 }
 
@@ -412,6 +415,10 @@ $(document).ready(function () {
     $(document).on('click', ':reset', function() {
         $('input').removeClass('is-invalid');
         $('textarea').removeClass('is-invalid');
+    });
+// =============================================================
+    $('select').select2({
+        theme: 'bootstrap4'
     });
 // =============================================================
 });

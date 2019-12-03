@@ -99,10 +99,9 @@
                     $('#editEmployeeModal #input-nama-e').val(data.nama);
 
                     var fitur = data.fitur.split(', ');
-
-                    fitur.forEach(element => {
-                        $('#editEmployeeModal #input-' + element.toLowerCase() + '-e').prop('checked', true);
-                    });
+                    
+                    $('#input-fitur-e').val(fitur);
+                    $('#input-fitur-e').trigger('change');
                 },
                 error:function() {
                     Swal.fire({
