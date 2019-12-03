@@ -1,7 +1,6 @@
 <?php $this->load->view('employee/_partials/header');?>
     <!-- Page Wrapper -->
     <div id="wrapper">
-        <?php $this->load->view('employee/_partials/sidebar');?>
         <?php $this->load->view('employee/_partials/navbar');?>
         <?php $this->load->view($content);?>
         <?php //$this->load->view('employee/_partials/footbar');?>

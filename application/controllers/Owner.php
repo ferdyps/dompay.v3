@@ -7,7 +7,7 @@
         public function __construct() {
             parent::__construct();
 
-            $this->load->model(['account_model', 'mutasi_model', 'employee_model']);
+            $this->load->model(['account_model', 'mutasi_model', 'employee_model', 'user_model']);
             $this->load->library('form_validation');
 
             $this->id_account = $this->session->userdata('id');
@@ -66,6 +66,153 @@
             ];
 
             $this->load->view('owner/index', $data);
+        }
+// =============================================================
+// ===================== Data Profile ==========================
+// =============================================================
+        public function edit_profile() {
+            $this->form_validation->set_rules([
+                [
+                    'field' => 'nama',
+                    'label' => 'Nama',
+                    'rules' => 'trim|required'
+                ]
+            ]);
+
+            $listData = $this->user_model->select($this->id_account);
+
+            if ($this->input->post()) {
+                $nama = $this->input->post('nama');
+                $username = $this->input->post('username');
+                $nohp = $this->input->post('nohp');
+
+                if ($username != $listData->username) {
+                    $this->form_validation->set_rules([
+                        [
+                            'field' => 'username',
+                            'label' => 'Nama',
+                            'rules' => 'trim|required|is_unique[users.username]',
+                            'errors' => ['is_unique' => 'Username is already being taken.']
+                        ]
+                    ]);
+                }
+
+                if ($nohp != $listData->nohp) {
+                    $this->form_validation->set_rules([
+                        [
+                            'field' => 'nohp', 
+                            'label' => 'Nomor HP', 
+                            'rules' => 'trim|required|numeric|min_length[10]|max_length[13]|is_unique[users.nohp]'
+                        ]
+                    ]);
+                }
+
+                if ($this->form_validation->run() == TRUE) {
+                    $data = [
+                        'nama' => $nama
+                    ];
+
+                    if ($username != $listData->username) {
+                        $data['username'] = $username;
+                    }
+
+                    if ($nohp != $listData->nohp) {
+                        $data['nohp'] = $nohp;
+                    }
+
+                    $query = $this->user_model->edit($this->id_account, $data);
+
+                    if ($query) {
+                        
+                        $this->session->set_userdata($data);
+
+                        $json = [
+                            'message' => 'Profile berhasil diubah..',
+                            'url' => base_url('owner')
+                        ];
+                    } else {
+                        $json['errors'] = 'Profile gagal diubah..!';
+                    }
+                } else {
+                    $no = 0;
+                    foreach ($this->input->post() as $key => $value) {
+                        if (form_error($key) != "") {
+                            $json['form_errors'][$no]['id'] = $key;
+                            $json['form_errors'][$no]['msg'] = form_error($key, null, null);
+                            $no++;
+                        }
+                    }
+                }
+                
+                echo json_encode($json);
+            } else {
+                $data = [
+                    'content' => 'owner/edit_profile',
+                    'title' => 'Edit Profile',
+                    'listData' => $listData
+                ];
+
+                $this->load->view('owner/index', $data);
+            }
+        }
+
+        public function edit_akun() {
+            $this->form_validation->set_rules([
+                [
+                    'field' => 'current_password', 
+                    'label' => 'Password Sekarang', 
+                    'rules' => 'trim|required'
+                ],
+                [
+                    'field' => 'new_password', 
+                    'label' => 'Password Baru', 
+                    'rules' => 'trim|required'
+                ],
+                [
+                    'field' => 'confirm_password', 
+                    'label' => 'Konfirmasi Password', 
+                    'rules' => 'trim|required|matches[new_password]'
+                ]
+            ]);
+
+            $listData = $this->user_model->select($this->id_account);
+
+            if ($this->input->post()) {
+                $current_password = md5($this->input->post('current_password'));
+                $new_password = md5($this->input->post('new_password'));
+                
+                if ($this->form_validation->run() == TRUE) {
+                    if ($current_password == $listData->password) {
+                        $data['password'] = $new_password;
+                        
+                        $query = $this->user_model->edit($this->id_account, $data);
+
+                        if ($query) {
+                            $json = [
+                                'message' => 'Password berhasil diubah..',
+                                'url' => base_url('owner')
+                            ];
+                        } else {
+                            $json['errors'] = 'Password gagal diubah..!';
+                        }
+                    } else {
+                        $json['errors'] = 'Current Password tidak sama..!';
+                    }
+                } else {
+                    $no = 0;
+                    foreach ($this->input->post() as $key => $value) {
+                        if (form_error($key) != "") {
+                            $json['form_errors'][$no]['id'] = $key;
+                            $json['form_errors'][$no]['msg'] = form_error($key, null, null);
+                            $no++;
+                        }
+                    }
+                }
+
+                echo json_encode($json);
+            } else {
+                redirect(base_url('owner/edit_profile'), 'refresh');
+            }
         }
 // =============================================================
 // ===================== Data Bank =============================

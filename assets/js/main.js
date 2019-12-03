@@ -56,10 +56,66 @@ function input_reset() {
     $('input[type=hidden]').val('');
     $('input[type=text]').val('');
     $('input[type=password]').val('');
-    
-    $('select[id^="input-fitur"]').val(null).trigger('change');
-
     $('input[type=checkbox]').prop('checked', false);
+}
+
+function default_form(content) {
+    $('input').blur();
+    event.preventDefault();
+
+    var formData = new FormData($(content)[0]);
+    var base_url = $(content).attr("action");
+
+    $.ajax({
+        url: base_url,
+        type: "post",
+        data: formData,
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        cache: false,
+        async: true,
+        timeout: 40000,
+        beforeSend:function(){
+            $('.btn-submit').attr("disabled", true);
+            $('#status').removeClass("d-none");
+            $('#btn-text').addClass("d-none");
+        },
+        complete:function(){
+            $('.btn-submit').attr("disabled", false);
+            $('#status').addClass("d-none");
+            $('#btn-text').removeClass("d-none");
+        },
+        success:function(data){
+            if ($.isEmptyObject(data.errors) && $.isEmptyObject(data.form_errors)) {
+                Swal.fire({
+                    title: "Berhasil",
+                    text: data.message, 
+                    icon: "success"
+                }).then(function() {
+                    location = data.url
+                });
+            } else if(data.form_errors) {
+                for(var form_data in data.form_errors) {
+                    $('#input-' + data.form_errors[form_data]['id']).addClass('is-invalid');
+                    $('#input-' + data.form_errors[form_data]['id']).parents('.form-input').find('.invalid-feedback').html(data.form_errors[form_data]['msg']);
+                }
+            } else {
+                Swal.fire({
+                    title: "Gagal",
+                    text: data.errors, 
+                    icon: "error"
+                });
+            }
+        },
+        error:function(){
+            Swal.fire({
+                title: "Error",
+                text: "Error pada System..!",
+                icon: "error"
+            });
+        }
+    });
 }
 
 function modal_form(content) {
@@ -313,64 +369,11 @@ $(window).on('load', function() {
 $(document).ready(function () {
 // =============================================================
     $('#default-form').submit(function() {
-        $('input').blur();
-        event.preventDefault();
+        default_form(this);
+    });
 
-        console.log($(this).attr("log"));
-
-        var formData = new FormData($(this)[0]);
-        var base_url = $(this).attr("action");
-
-        $.ajax({
-            url: base_url,
-            type: "post",
-            data: formData,
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            cache: false,
-            async: true,
-            timeout: 40000,
-            beforeSend:function(){
-                $('.btn-submit').attr("disabled", true);
-                $('#status').removeClass("d-none");
-                $('#btn-text').addClass("d-none");
-            },
-            complete:function(){
-                $('.btn-submit').attr("disabled", false);
-                $('#status').addClass("d-none");
-                $('#btn-text').removeClass("d-none");
-            },
-            success:function(data){
-                if ($.isEmptyObject(data.errors) && $.isEmptyObject(data.form_errors)) {
-                    Swal.fire({
-                        title: "Berhasil",
-                        text: data.message, 
-                        icon: "success"
-                    }).then(function() {
-                        location = data.url
-                    });
-                } else if(data.form_errors) {
-                    for(var form_data in data.form_errors) {
-                        $('#input-' + data.form_errors[form_data]['id']).addClass('is-invalid');
-                        $('#input-' + data.form_errors[form_data]['id']).parents('.form-input').find('.invalid-feedback').html(data.form_errors[form_data]['msg']);
-                    }
-                } else {
-                    Swal.fire({
-                        title: "Gagal",
-                        text: data.errors, 
-                        icon: "error"
-                    });
-                }
-            },
-            error:function(){
-                Swal.fire({
-                    title: "Error",
-                    text: "Error pada System..!",
-                    icon: "error"
-                });
-            }
-        });
+    $('#default-form-2').submit(function() {
+        default_form(this);
     });
 
     $('#modal-form-bank').submit(function() {

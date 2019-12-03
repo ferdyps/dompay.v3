@@ -96,7 +96,7 @@
                     <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr class="text-center bg-primary text-white">
-                                <th width="5%">No</th>
+                                <th width="2%">No</th>
                                 <th>Tanggal Mutasi</th>
                                 <th>Nominal</th>
                                 <th>Tipe Mutasi</th>
@@ -107,21 +107,25 @@
                       `;
                 
                 data.forEach(item => {
-                    var tipeMutasi, nominal;
+                    var tipeMutasi, warnaMutasi, nominal;
 
                     if (bank == "BNI" || bank == "BCA") {
                         nominal = item.nominal;
                         if (item.type == "DB") {
                             tipeMutasi = "Debit";
+                            warnaMutasi = "text-danger";
                         } else {
                             tipeMutasi = "Kredit";
+                            warnaMutasi = "text-success";
                         }
                     } else if(bank == "Mandiri" || bank == "BRI") {
                         if (item.debit == 0) {
                             tipeMutasi = "Kredit";
+                            warnaMutasi = "text-success";
                             nominal = item.kredit;
                         } else {
                             tipeMutasi = "Debit"
+                            warnaMutasi = "text-danger";
                             nominal = item.debit;
                         }
                     }
@@ -131,7 +135,7 @@
                         <td class="text-center align-middle">${no++}</td>
                         <td class="text-center align-middle">${item.tanggal}</td>
                         <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
-                        <td class="text-center align-middle">${tipeMutasi}</td>
+                        <td class="text-center align-middle ${warnaMutasi}">${tipeMutasi}</td>
                         <td class="text-center align-middle">${item.keterangan}</td>
                     </tr>
                     `;
@@ -141,6 +145,7 @@
 
                 $('.card-body').html(innerHTML);
                 $('#dataTable').DataTable({
+                    "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
                     "dom": `
                         <"row" 
                             <"col-sm-12 col-md-5 mt-auto" l>

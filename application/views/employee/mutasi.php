@@ -85,7 +85,7 @@
                       `;
                 
                 for (let index = 0; index < data.length; index++) {
-                    var tipeMutasi, nominal;
+                    var tipeMutasi, warnaMutasi, nominal;
 
                     <?php 
                     if(in_array('Debit', $this->fitur) && in_array('Kredit', $this->fitur)) { ?>
@@ -93,15 +93,19 @@
                             nominal = data[index]['nominal'];
                             if (data[index]['type'] == "DB") {
                                 tipeMutasi = "Debit";
+                                warnaMutasi = "text-danger";
                             } else {
                                 tipeMutasi = "Kredit";
+                                warnaMutasi = "text-success";
                             }
                         } else if(bank == "Mandiri" || bank == "BRI") {
                             if (data[index]['debit'] == 0) {
                                 tipeMutasi = "Kredit";
+                                warnaMutasi = "text-success";
                                 nominal = data[index]['kredit'];
                             } else {
                                 tipeMutasi = "Debit"
+                                warnaMutasi = "text-danger";
                                 nominal = data[index]['debit'];
                             }
                         }
@@ -110,6 +114,7 @@
                         if (bank == "BNI" || bank == "BCA") {
                             if (data[index]['type'] == "DB") {
                                 tipeMutasi = "Debit";
+                                warnaMutasi = "text-danger";
                                 nominal = data[index]['nominal'];
                             } else {
                                 continue;
@@ -119,6 +124,7 @@
                                 continue;
                             } else {
                                 tipeMutasi = "Debit"
+                                warnaMutasi = "text-danger";
                                 nominal = data[index]['debit'];
                             }
                         }
@@ -129,11 +135,13 @@
                                 continue;
                             } else {
                                 tipeMutasi = "Kredit";
+                                warnaMutasi = "text-success";
                                 nominal = data[index]['nominal'];
                             }
                         } else if(bank == "Mandiri" || bank == "BRI") {
                             if (data[index]['debit'] == 0) {
                                 tipeMutasi = "Kredit";
+                                warnaMutasi = "text-success";
                                 nominal = data[index]['kredit'];
                             } else {
                                 continue;
@@ -146,7 +154,7 @@
                         <td class="text-center align-middle">${no++}</td>
                         <td class="text-center align-middle">${data[index]['tanggal']}</td>
                         <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
-                        <td class="text-center align-middle">${tipeMutasi}</td>
+                        <td class="text-center align-middle ${warnaMutasi}">${tipeMutasi}</td>
                         <td class="text-center align-middle">${data[index]['keterangan']}</td>
                     </tr>
                     `;
@@ -156,6 +164,7 @@
 
                 $('.card-body').html(innerHTML);
                 $('#dataTable').DataTable({
+                    "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
                     "dom": `
                         <"row" 
                             <"col-sm-12 col-md-5 mt-auto" l>

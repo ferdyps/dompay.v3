@@ -37,23 +37,11 @@
                     'content' => 'employee/dashboard',
                     'title' => 'Dashboard'
                 ];
+
+                $this->load->view('employee/index', $data);
             } else {
-                $data = [
-                    'content' => 'employee/dashboard_blank',
-                    'title' => 'Dashboard'
-                ];
+                redirect(base_url('employee/mutasi'), 'refresh');
             }
-
-            $this->load->view('employee/index', $data);
-        }
-
-        public function bank() {
-            $data = [
-                'content' => 'employee/bank',
-                'title' => 'Bank'
-            ];
-
-            $this->load->view('employee/index', $data);
         }
 
         public function mutasi() {

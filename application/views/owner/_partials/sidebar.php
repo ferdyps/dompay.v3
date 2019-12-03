@@ -54,16 +54,10 @@
 
     <!-- Nav Item - Collapse Menu -->
     <li class="nav-item <?php if($title == "Setting") echo "active"; ?>">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSetting" aria-expanded="true" aria-controls="collapseSetting">
+        <a class="nav-link" href="<?= base_url('owner/list_employee');?>">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Setting</span>
+            <span>Setting Akun Employee</span>
         </a>
-        <div id="collapseSetting" class="collapse" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('owner/list_employee');?>">Akun Employee</a>
-                <!-- <a class="collapse-item" href="<?= base_url('owner/settings');?>">All Setting</a> -->
-            </div>
-        </div>
     </li>
 
     <!-- Divider -->
