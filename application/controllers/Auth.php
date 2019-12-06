@@ -1,16 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 // =============================================================
 	public function __construct() {
 		parent::__construct();
 
 		$this->load->library('form_validation');
 		$this->load->model(['auth_model', 'employee_model']);
-		
-		// include_once APPPATH . "libraries/google-api-php-client/Google_Client.php";
-		// include_once APPPATH . "libraries/google-api-php-client/contrib/Google_Oauth2Service.php";
 
 		if ($this->session->userdata('isLoggedIn')) {
 			if ($this->session->userdata('akses') == 1) {
@@ -40,10 +37,10 @@ class Auth extends CI_Controller {
 
 		if ($this->input->post()) {
 			$username = $this->input->post('username');
-			$password = md5($this->input->post('password'));
+			$password = $this->input->post('password');
 			
 			if ($this->form_validation->run() == TRUE) {
-				$query = $this->auth_model->login($username, $password);
+				$query = $this->auth_model->login($this->cryptor($username), $this->cryptor($password));
 				$data_account = $query->row();
 				$row = $query->num_rows();
 
@@ -136,15 +133,15 @@ class Auth extends CI_Controller {
 			$nama = $this->input->post('nama');
 			$email = $this->input->post('email');
 			$nohp = $this->input->post('nohp');
-			$password = md5($this->input->post('password'));
+			$password = $this->input->post('password');
 			
 			if ($this->form_validation->run() == TRUE) {
 				$data = [
 					'nama' => $nama,
-					'username' => $email,
+					'username' => $this->cryptor($email),
 					'email' => $email,
 					'nohp' => $nohp,
-					'password' => $password,
+					'password' => $this->cryptor($password),
 					'akses' => 2,
 					'fitur' => 'All'
 				];

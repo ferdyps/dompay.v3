@@ -1,8 +1,8 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
     
-    class Owner extends CI_Controller {
-        public $id_account, $email, $nama, $nohp, $dataAccount;
+    class Owner extends MY_Controller {
+        public $id_user, $email, $nama, $nohp, $dataAccount = [], $controller;
 // =============================================================
         public function __construct() {
             parent::__construct();
@@ -10,12 +10,26 @@
             $this->load->model(['account_model', 'mutasi_model', 'employee_model', 'user_model']);
             $this->load->library('form_validation');
 
-            $this->id_account = $this->session->userdata('id');
+            $this->id_user = $this->session->userdata('id');
             $this->email = $this->session->userdata('email');
             $this->nama = $this->session->userdata('nama');
             $this->nohp = $this->session->userdata('nohp');
 
-            $this->dataAccount = $this->account_model->select($this->id_account);
+            $this->controller = $this;
+            $dataAccount = $this->account_model->select($this->id_user);
+
+            if (count($dataAccount) > 0) {
+                $no = 0;
+                foreach ($dataAccount as $key => $value) {
+                    $this->dataAccount[$no]['id_account'] = $value['id_account'];
+                    $this->dataAccount[$no]['username'] = $this->cryptor($value['username'], 'd');
+                    $this->dataAccount[$no]['password'] = $this->cryptor($value['password'], 'd');
+                    $this->dataAccount[$no]['no_rek'] = $this->cryptor($value['no_rek'], 'd');
+                    $this->dataAccount[$no]['typeBank'] = $value['typeBank'];
+                    $this->dataAccount[$no]['deskripsi'] = $value['deskripsi'];
+                    $no++;
+                }
+            }
             
             if (!$this->session->userdata('isLoggedIn')) {
                 redirect(base_url(), 'refresh');
@@ -52,7 +66,7 @@
             $data = [
                 'content' => 'owner/mutasi',
                 'title' => 'Mutasi',
-                'listDataAccount' => $this->account_model->select($this->id_account)
+                'listDataAccount' => $this->dataAccount
             ];
 
             $this->load->view('owner/index', $data);
@@ -62,7 +76,7 @@
             $data = [
                 'content' => 'owner/list_employee',
                 'title' => 'Setting',
-                'listDataEmployee' => $this->employee_model->viewByOwner($this->id_account)
+                'listDataEmployee' => $this->employee_model->viewByOwner($this->id_user)
             ];
 
             $this->load->view('owner/index', $data);
@@ -79,20 +93,19 @@
                 ]
             ]);
 
-            $listData = $this->user_model->select($this->id_account);
+            $listData = $this->user_model->select($this->id_user);
 
             if ($this->input->post()) {
                 $nama = $this->input->post('nama');
                 $username = $this->input->post('username');
                 $nohp = $this->input->post('nohp');
 
-                if ($username != $listData->username) {
+                if ($this->cryptor($username) != $listData->username) {
                     $this->form_validation->set_rules([
                         [
                             'field' => 'username',
-                            'label' => 'Nama',
-                            'rules' => 'trim|required|is_unique[users.username]',
-                            'errors' => ['is_unique' => 'Username is already being taken.']
+                            'label' => 'Username',
+                            'rules' => 'trim|required|callback_username_check'
                         ]
                     ]);
                 }
@@ -112,15 +125,15 @@
                         'nama' => $nama
                     ];
 
-                    if ($username != $listData->username) {
-                        $data['username'] = $username;
+                    if ($this->cryptor($username) != $listData->username) {
+                        $data['username'] = $this->cryptor($username);
                     }
 
                     if ($nohp != $listData->nohp) {
                         $data['nohp'] = $nohp;
                     }
 
-                    $query = $this->user_model->edit($this->id_account, $data);
+                    $query = $this->user_model->edit($this->id_user, $data);
 
                     if ($query) {
                         
@@ -175,17 +188,17 @@
                 ]
             ]);
 
-            $listData = $this->user_model->select($this->id_account);
+            $listData = $this->user_model->select($this->id_user);
 
             if ($this->input->post()) {
-                $current_password = md5($this->input->post('current_password'));
-                $new_password = md5($this->input->post('new_password'));
+                $current_password = $this->input->post('current_password');
+                $new_password = $this->input->post('new_password');
                 
                 if ($this->form_validation->run() == TRUE) {
-                    if ($current_password == $listData->password) {
-                        $data['password'] = $new_password;
+                    if ($this->cryptor($current_password) == $listData->password) {
+                        $data['password'] = $this->cryptor($new_password);
                         
-                        $query = $this->user_model->edit($this->id_account, $data);
+                        $query = $this->user_model->edit($this->id_user, $data);
 
                         if ($query) {
                             $json = [
@@ -241,15 +254,20 @@
                 $password = $this->input->post('password');
                 $no_rek = $this->input->post('nomorRek');
                 $typeBank = $this->input->post('typeBank');
+                $saldo = $this->input->post('saldo');
+                $deskripsi = $this->input->post('deskripsi');
+                
                 
                 if ($this->form_validation->run() == TRUE) {
                     if ($this->input->post('data') == "ada") {
                         $data = [
-                            'id' => $this->id_account,
-                            'username' => $username,
-                            'password' => $password,
-                            'no_rek' => $no_rek,
-                            'typeBank' => $typeBank
+                            'id' => $this->id_user,
+                            'username' => $this->cryptor($username),
+                            'password' => $this->cryptor($password),
+                            'no_rek' => $this->cryptor($no_rek),
+                            'typeBank' => $typeBank,
+                            'saldo' => $this->cryptor($saldo),
+                            'deskripsi' => $deskripsi
                         ];
     
                         $query = $this->account_model->add($data);
@@ -279,7 +297,7 @@
         }
 
         public function get_accountBank() {
-            echo json_encode($this->account_model->select($this->id_account));
+            echo json_encode($this->dataAccount);
         }
 
         public function delete_accountBank($id) {
@@ -325,7 +343,7 @@
             if ($this->input->post()) {
                 $nama = $this->input->post('nama');
                 $username = $this->input->post('username');
-                $password = md5($this->input->post('password'));
+                $password = $this->input->post('password');
                 $fitur = $this->input->post('fitur');
 
                 if ($fitur == NULL) {
@@ -336,15 +354,15 @@
                     if ($this->form_validation->run() == TRUE) {
                         $data = [
                             'nama' => $nama,
-                            'username' => $username,
+                            'username' => $this->cryptor($username),
                             'email' => $this->email,
                             'nohp' => $this->nohp,
-                            'password' => $password,
+                            'password' => $this->cryptor($password),
                             'akses' => 3,
                             'fitur' => $fitur
                         ];
 
-                        $query = $this->employee_model->add($data, $this->id_account);
+                        $query = $this->employee_model->add($data, $this->id_user);
 
                         if ($query) {
                             $json['message'] = "Akun berhasil ditambah..";
@@ -380,6 +398,7 @@
             if ($this->input->post()) {
                 $nama = $this->input->post('nama');
                 $fitur = $this->input->post('fitur');
+                $password = $this->input->post('password');
 
                 if ($this->input->post('password') != NULL) {
                     $this->form_validation->set_rules([
@@ -394,8 +413,6 @@
                             'rules' => 'trim|required|matches[password]'
                         ]
                     ]);
-
-                    $password = md5($this->input->post('password'));
                 }
 
                 if ($fitur == NULL) {
@@ -410,7 +427,7 @@
                         ];
 
                         if ($this->input->post('password') != NULL) {
-                            $data['password'] = $password;
+                            $data['password'] = $this->cryptor($password);
                         }
 
                         $query = $this->employee_model->edit($id, $data);
@@ -438,7 +455,7 @@
         }
 
         public function get_employee() {
-            echo json_encode($this->employee_model->viewByOwner($this->id_account));
+            echo json_encode($this->employee_model->viewByOwner($this->id_user));
         }
 
         public function delete_employee($id) {
@@ -451,6 +468,18 @@
             }
 
             echo json_encode($json);
+        }
+// =============================================================
+// ====================== Form Validate ========================
+// =============================================================
+        public function username_check($username) {
+            $query = $this->user_model->usernameCheck($this->cryptor($username))->num_rows();
+            if ($query != 0) {;
+                $this->form_validation->set_message('username_check', '{field} is already being taken.');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
         }
 // =============================================================
     }

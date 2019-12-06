@@ -32,7 +32,6 @@
         }
 
         public function delete($id) {
-            $this->delete_data($this->table_emp, 'id', $id);
             return $this->delete_data($this->table, 'id', $id);
         }
 // =============================================================

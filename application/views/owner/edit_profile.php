@@ -16,7 +16,7 @@
                     </div>
                     <div class="form-group form-input">
                         <label for="input-username">Username</label>
-                        <input type="text" id="input-username" class="form-control" name="username" value="<?= $listData->username; ?>">
+                        <input type="text" id="input-username" class="form-control" name="username" value="<?= $this->controller->cryptor($listData->username, 'd'); ?>">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-group form-input">

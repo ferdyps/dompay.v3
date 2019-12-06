@@ -54,3 +54,4 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 // =============================================================
 $route['register'] = 'auth/register';
+$route['cryptor'] = 'auth/cryptor_json';

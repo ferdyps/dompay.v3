@@ -7,11 +7,15 @@
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
+<div class="d-none d-md-inline-block">
+    <img src="<?= base_url('assets/images/for_employee.png'); ?>">
+</div>
+
 <!-- Topbar Saldo -->
 <?php if(in_array('Saldo', $this->fitur)) { ?>
 <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
     <div class="row">
-        <select class="col form-control bg-light border-0 small" id="dataAccount-saldo">
+        <select class="col form-control bg-light border-0 small select-default" id="dataAccount-saldo">
             <?php 
             if ($this->dataAccount != null) {
                 foreach ($this->dataAccount as $data) { ?>
@@ -27,10 +31,6 @@
     </div>
 </div>
 <?php } ?>
-
-<div class="mr-auto w-100">
-    <img src="<?= base_url('assets/images/for_employee.png'); ?>">
-</div>
 
 <!-- Topbar Navbar -->
 <ul class="navbar-nav ml-auto">

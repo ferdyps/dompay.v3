@@ -10,9 +10,10 @@
       <?= form_open('owner/add_accountBank', ['id' => 'modal-form-bank', 'log' => 'Tambah Akun Bank']); ?>
       <div class="modal-body">
           <input type="hidden" id="input-data" name="data" value="tidak ada">
+          <input type="hidden" id="input-saldo" name="saldo">
           <div class="form-group form-input">
             <label for="input-typeBank" class="col-form-label">Tipe Bank :</label>
-            <select name="typeBank" class="form-control" id="input-typeBank">
+            <select name="typeBank" class="form-control select-100" id="input-typeBank">
                 <option value="Mandiri">Mandiri</option>
                 <option value="BCA">BCA</option>
                 <option value="BNI">BNI</option>
@@ -32,6 +33,11 @@
           <div class="form-group form-input">
             <label for="input-password" class="col-form-label">Password :</label>
             <input type="password" name="password" class="form-control" id="input-password" placeholder="Password..">
+            <div class="invalid-feedback"></div>
+          </div>
+          <div class="form-group form-input">
+            <label for="input-deskripsi" class="col-form-label">Deskripsi :</label>
+            <textarea name="deskripsi" class="form-control" id="input-deskripsi" placeholder="Deskripsi.."></textarea>
             <div class="invalid-feedback"></div>
           </div>
       </div>

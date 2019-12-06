@@ -32,5 +32,9 @@
             return $this->select_data($this->view_owner, 'id', $id);
         }
 // =============================================================
+        public function usernameCheck($username) {
+            return $this->select_data($this->table, 'username', $username);
+        }
+// =============================================================
     }
 ?>

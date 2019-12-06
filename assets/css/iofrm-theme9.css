@@ -11,6 +11,11 @@
 1. General Styles.
 2. Responsive Styles.
 -------------------------------------------------------------------*/
+.bg-gradient-primary {
+    background-color: #4e73df;
+    background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+    background-size: cover;
+}
 /* -----------------------------------
     1 - General Styles
 ------------------------------------*/
@@ -56,11 +61,11 @@
 }
 
 .img-holder .info-holder h3 {
-    color: #064E89;
+    color: #fff;
 }
 
 .img-holder .info-holder p {
-    color: #064E89;
+    color: #fff;
 }
 
 .img-holder .bg {
@@ -137,7 +142,7 @@
 }
 
 .form-content .page-links a:after {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 89, 255, 0.5);
 }
 
 .form-content .page-links a.active:after {
@@ -145,7 +150,7 @@
 }
 
 .form-content .page-links a:hover:after, .form-content .page-links a:focus:after {
-    background-color: #fff;
+    background-color: #007bff;
 }
 
 .form-content input, .form-content .dropdown-toggle.btn-default {

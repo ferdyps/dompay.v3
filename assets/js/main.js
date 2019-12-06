@@ -1,5 +1,5 @@
-var check;
-
+var check, saldo;
+// =============================================================
 function delete_data(base_url, id) {
     Swal.fire({
         title: "Apakah anda yakin ?",
@@ -58,7 +58,7 @@ function input_reset() {
     $('input[type=password]').val('');
     $('input[type=checkbox]').prop('checked', false);
 }
-
+// =============================================================
 function default_form(content) {
     $('input').blur();
     event.preventDefault();
@@ -91,7 +91,8 @@ function default_form(content) {
                 Swal.fire({
                     title: "Berhasil",
                     text: data.message, 
-                    icon: "success"
+                    icon: "success",
+                    heightAuto: false
                 }).then(function() {
                     location = data.url
                 });
@@ -104,7 +105,8 @@ function default_form(content) {
                 Swal.fire({
                     title: "Gagal",
                     text: data.errors, 
-                    icon: "error"
+                    icon: "error",
+                    heightAuto: false
                 });
             }
         },
@@ -112,12 +114,13 @@ function default_form(content) {
             Swal.fire({
                 title: "Error",
                 text: "Error pada System..!",
-                icon: "error"
+                icon: "error",
+                heightAuto: false
             });
         }
     });
 }
-
+// =============================================================
 function modal_form(content) {
     $('input').blur();
     event.preventDefault();
@@ -225,11 +228,13 @@ function modal_form_bank(content) {
                     icon: "success"
                 }).then(function() {
                     location.reload();
+                    saldo = null;
                 });
             } else if(data.check) {
                 check_data_bank(content);
                 if (check) {
                     $('#addAccountModal #input-data').val('ada');
+                    $('#addAccountModal #input-saldo').val(saldo);
                     modal_form_bank(content);
                 } else {
                     Swal.fire({
@@ -260,51 +265,7 @@ function modal_form_bank(content) {
         }
     });
 }
-
-function check_data_bank(content) {
-    $('input').blur();
-    event.preventDefault();
-    var base_url;
-
-    var formData = new FormData($(content)[0]);
-
-    var tipeBank = formData.get('typeBank');
-    var nomorRek = formData.get('nomorRek');
-    var username = formData.get('username');
-    var password = formData.get('password');
-
-    if (tipeBank == "Mandiri") {
-        base_url = "http://uzaha.com/restapi/api/mandiri?bank=mandiri&req=" + nomorRek + "&user=" + username +"&pass=" + password +"";
-    } else if (tipeBank == "BNI") {
-        base_url = "http://uzaha.com/restapi/api/bni?bank=bni&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
-    } else if (tipeBank == "BRI") {
-        base_url = "http://uzaha.com/restapi/api/bri?bank=bri&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
-    } else if (tipeBank == "BCA") {
-        base_url = "http://uzaha.com/restapi/api/bca?bank=bca&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
-    }
-
-    $.ajax({
-        url: base_url,
-        type: "get",
-        data: {req:nomorRek, user:username, pass:password},
-        dataType: "json",
-        contentType: false,
-        processData: false,
-        async: false,
-        timeout: 40000,
-        success:function(data){
-            if (Array.isArray(data) && data.length > 0) {
-                check = true;
-            } else {
-                check = false;
-            }
-        },
-        error:function(){
-            check = false;
-        }
-    });
-}
-
+// =============================================================
 function getSaldoBank(bank, req, username, password) {
     var base_url;
 
@@ -341,6 +302,11 @@ function getSaldoBank(bank, req, username, password) {
         success:function(data){
             $('#dataSaldo').addClass('mt-2');
             $('#dataSaldo').html('Saldo : Rp. '+ numeral(data).format('0,0'));
+
+            var currentURL = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
+            if (currentURL == "mutasi") {
+                startup();
+            }
         },
         error:function() {
             $('#dataSaldo').html(`
@@ -361,7 +327,52 @@ function startupSaldoBank() {
         getSaldoBank(tipe, norek, username, password);
     }
 }
+// =============================================================
+function check_data_bank(content) {
+    $('input').blur();
+    event.preventDefault();
+    var base_url;
 
+    var formData = new FormData($(content)[0]);
+
+    var tipeBank = formData.get('typeBank');
+    var nomorRek = formData.get('nomorRek');
+    var username = formData.get('username');
+    var password = formData.get('password');
+
+    if (tipeBank == "Mandiri") {
+        base_url = "http://uzaha.com/restapi/api/mandiri/saldo?bank=mandiri&req=" + nomorRek + "&user=" + username +"&pass=" + password +"";
+    } else if (tipeBank == "BNI") {
+        base_url = "http://uzaha.com/restapi/api/bni/saldo?bank=bni&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
+    } else if (tipeBank == "BRI") {
+        base_url = "http://uzaha.com/restapi/api/bri/saldo?bank=bri&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
+    } else if (tipeBank == "BCA") {
+        base_url = "http://uzaha.com/restapi/api/bca/saldo?bank=bca&req=" + nomorRek + "&user=" + username + "&pass=" + password +"";
+    }
+
+    $.ajax({
+        url: base_url,
+        type: "get",
+        data: {req:nomorRek, user:username, pass:password},
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        async: false,
+        timeout: 40000,
+        success:function(data){
+            if ($.trim(data)) {
+                check = true;
+                saldo = data;
+            } else {
+                check = false;
+            }
+        },
+        error:function(){
+            check = false;
+        }
+    });
+}
+// =============================================================
 $(window).on('load', function() {
     startupSaldoBank();
 });
@@ -420,8 +431,13 @@ $(document).ready(function () {
         $('textarea').removeClass('is-invalid');
     });
 // =============================================================
-    $('select').select2({
+    $('.select-default').select2({
         theme: 'bootstrap4'
+    });
+    
+    $('.select-100').select2({
+        theme: 'bootstrap4',
+        width: '100%'
     });
 // =============================================================
 });

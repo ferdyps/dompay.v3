@@ -14,14 +14,19 @@
                             <label for="dataAccount" class="mt-2">Pilih Data Bank :</label>
                         </div>
                         <div class="col-sm-12 col-md-auto">
-                            <select id="dataAccount" class="form-control">
-                                <?php foreach ($listDataAccount as $data) { ?>
-                                    <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
+                            <select id="dataAccount" class="form-control select-100">
+                            <?php 
+                                if ($listDataAccount != null) {
+                                    foreach ($listDataAccount as $data) { ?>
+                                        <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
+                                    <?php }
+                                } else { ?>
+                                    <option disabled selected>Tidak Ada</option>
                                 <?php } ?>
                             </select>
                         </div>
-                        <div class="col-sm-12 mt-sm-2 mt-md-0 col-md-auto">
-                            <button class="btn btn-primary" onclick="startup();">Refresh</button>
+                        <div class="col-sm-12 mt-2 mt-md-0 p-md-0 col-md-auto text-center">
+                            <button class="btn btn-primary w-100" onclick="startup();">Refresh</button>
                         </div>
                     </div>
                 </div>
@@ -218,6 +223,8 @@
     });
 
     $(window).on('load', function() {
-        startup();
+        <?php if (!in_array('Saldo', $this->fitur)) { ?>
+            startup();
+        <?php } ?>
     });
 </script>

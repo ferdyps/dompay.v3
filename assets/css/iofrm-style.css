@@ -168,7 +168,7 @@ html, body {
 
 .img-holder {
     display: inline-block;
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     left: 0;
     width: 550px;
@@ -241,7 +241,7 @@ html, body {
 
 @media (min-height: 700px) {
     .img-holder {
-        position: fixed;
+        /* position: fixed; */
     }
 
     .website-logo {
@@ -397,7 +397,7 @@ html, body {
 }
 
 .form-content .page-links a.active:after {
-    background-color: #fff;
+    background-color: #007bff!important;
 }
 
 .form-content .page-links a:hover:after, .form-content .page-links a:focus:after {
