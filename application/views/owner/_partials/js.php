@@ -9,10 +9,4 @@
 <script src="<?= base_url('assets/vendor/pace/pace.min.js'); ?>"></script>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
-<!-- Page level custom scripts -->
-<?php if ($title == "Dashboard") { ?>
-    <!-- <script src="<?= base_url('assets/vendor/SBAdmin/js/demo/chart-area-demo.js');?>"></script> -->
-    <script src="<?= base_url('assets/vendor/SBAdmin/js/demo/chart-pie-demo.js')?>"></script>
-<?php } ?>
-
 <script src="<?= base_url('assets/js/main.js'); ?>"></script>

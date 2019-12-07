@@ -186,9 +186,12 @@
         axisY: {
           title: "Total Debit"
         },
+        toolTip:{
+          content:"<span style='\"'color: #e74a3b;'\"'>{x}</span> <br> <small>Rp.</small>{y}"
+        },
         data: [{
           type: "splineArea",
-          color: "#6599FF",
+          color: "#e74a3b",
           xValueType: "dateTime",
           xValueFormatString: "DD MMM YYYY",
           dataPoints: <?php echo json_encode($dataPointsDebit, JSON_NUMERIC_CHECK); ?>
@@ -207,9 +210,12 @@
         axisY: {
           title: "Total Kredit"
         },
+        toolTip:{
+          content:"<span style='\"'color: #1cc88a;'\"'>{x}</span> <br> <small>Rp.</small>{y}"
+        },
         data: [{
           type: "splineArea",
-          color: "#6599FF",
+          color: "#1cc88a",
           xValueType: "dateTime",
           xValueFormatString: "DD MMM YYYY",
           dataPoints: <?php echo json_encode($dataPointsKredit, JSON_NUMERIC_CHECK); ?>
