@@ -29,7 +29,7 @@
                     $this->dataAccount[$no]['saldo'] = $value['saldo'];
                     $this->dataAccount[$no]['deskripsi'] = $value['deskripsi'];
 
-                    $this->totalSaldo += $value['saldo'];
+                    @$this->totalSaldo += $value['saldo'];
                     $no++;
                 }
             }
