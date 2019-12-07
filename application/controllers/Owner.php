@@ -48,13 +48,20 @@
 // ========================= View ==============================
 // =============================================================
         public function index() {
-            $dataPointsDebit = [];
+            $dataPointsDebit = []; $dataPointsKredit = [];
             $dataAccount = $this->account_model->select($this->id_user);
+
             foreach ($dataAccount as $keyA => $valueA) {
                 $query = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Debit')->result_array();
 
                 foreach ($query as $keyB => $valueB) {
                     array_push($dataPointsDebit, ['x' => strtotime($valueB['tgl_mutasi']) * 1000, 'y' => $valueB['total']]);
+                }
+
+                $query2 = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Kredit')->result_array();
+
+                foreach ($query2 as $keyB => $valueB) {
+                    array_push($dataPointsKredit, ['x' => strtotime($valueB['tgl_mutasi']) * 1000, 'y' => $valueB['total']]);
                 }
             }
 
@@ -63,11 +70,13 @@
             }
 
             usort($dataPointsDebit, "cmp");
+            usort($dataPointsKredit, "cmp");
             
             $data = [
                 'content' => 'owner/dashboard',
                 'title' => 'Dashboard',
-                'dataPointsDebit' => $dataPointsDebit
+                'dataPointsDebit' => $dataPointsDebit,
+                'dataPointsKredit' => $dataPointsKredit
             ];
 
             $this->load->view('owner/index', $data);
