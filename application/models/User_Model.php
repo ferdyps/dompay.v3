@@ -32,6 +32,8 @@
             return $this->select_data($this->view_owner, 'id', $id);
         }
 // =============================================================
+// ==================== Callback Validate ======================
+// =============================================================
         public function usernameCheck($username) {
             return $this->select_data($this->table, 'username', $username);
         }

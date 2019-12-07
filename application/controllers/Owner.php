@@ -264,7 +264,7 @@
                 [
                     'field' => 'nomorRek',
                     'label' => 'Nomor Rekening',
-                    'rules' => 'trim|required|numeric|min_length[10]|max_length[30]|is_unique[accounts.no_rek]'
+                    'rules' => 'trim|required|numeric|min_length[10]|max_length[30]|callback_req_check'
                 ],
                 [
                     'field' => 'username',
@@ -299,7 +299,7 @@
                             'password' => $this->cryptor($password),
                             'no_rek' => $this->cryptor($no_rek),
                             'typeBank' => $typeBank,
-                            'saldo' => $this->cryptor($saldo),
+                            'saldo' => $saldo,
                             'deskripsi' => $deskripsi
                         ];
     
@@ -405,7 +405,7 @@
                 [
                     'field' => 'username',
                     'label' => 'Username',
-                    'rules' => 'trim|required|is_unique[users.username]'
+                    'rules' => 'trim|required|callback_username_check'
                 ],
                 [
                     'field' => 'password',
@@ -418,8 +418,6 @@
                     'rules' => 'trim|required|matches[password]'
                 ]
             ]);
-
-            $this->form_validation->set_message('is_unique', '{field} is already being taken.');
 
             if ($this->input->post()) {
                 $nama = $this->input->post('nama');
@@ -556,7 +554,17 @@
         public function username_check($username) {
             $query = $this->user_model->usernameCheck($this->cryptor($username))->num_rows();
             if ($query != 0) {;
-                $this->form_validation->set_message('username_check', '{field} is already being taken.');
+                $this->form_validation->set_message('username_check', '{field} sudah terdaftar.');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+
+        public function req_check($req) {
+            $query = $this->account_model->reqCheck($this->cryptor($req))->num_rows();
+            if ($query != 0) {;
+                $this->form_validation->set_message('req_check', '{field} sudah terdaftar.');
                 return FALSE;
             } else {
                 return TRUE;
