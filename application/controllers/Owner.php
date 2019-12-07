@@ -2,7 +2,7 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class Owner extends MY_Controller {
-        public $id_user, $email, $nama, $nohp, $dataAccount = [], $controller;
+        public $id_user, $email, $nama, $nohp, $dataAccount = [], $totalSaldo = 0, $controller;
 // =============================================================
         public function __construct() {
             parent::__construct();
@@ -26,7 +26,10 @@
                     $this->dataAccount[$no]['password'] = $this->cryptor($value['password'], 'd');
                     $this->dataAccount[$no]['no_rek'] = $this->cryptor($value['no_rek'], 'd');
                     $this->dataAccount[$no]['typeBank'] = $value['typeBank'];
+                    $this->dataAccount[$no]['saldo'] = $this->cryptor($value['saldo'], 'd');
                     $this->dataAccount[$no]['deskripsi'] = $value['deskripsi'];
+
+                    $this->totalSaldo += $this->dataAccount[$no]['saldo'];
                     $no++;
                 }
             }
@@ -246,6 +249,11 @@
                     'field' => 'password',
                     'label' => 'Password', 
                     'rules' => 'trim|required'
+                ],
+                [
+                    'field' => 'deskripsi',
+                    'label' => 'Deskripsi', 
+                    'rules' => 'trim|required'
                 ]
             ]);
 
@@ -256,7 +264,6 @@
                 $typeBank = $this->input->post('typeBank');
                 $saldo = $this->input->post('saldo');
                 $deskripsi = $this->input->post('deskripsi');
-                
                 
                 if ($this->form_validation->run() == TRUE) {
                     if ($this->input->post('data') == "ada") {

@@ -39,7 +39,7 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-12 col-lg-3 mb-lg-auto mb-md-3">
+                <div class="col-md-12 col-lg-3 mb-lg-auto mb-md-3">
                     <div class="list-group" id="dataAccount">
                         <?php 
                         if ($listDataAccount != null) {
@@ -54,12 +54,12 @@
                                 } else if($data['typeBank'] == "BCA") {
                                     $image = config_item('images_url') . '/bank/bca.png';
                                 } ?>
-                                <button class="list-group-item list-group-item-action <?php if($no ==0) echo 'active'; ?>" data-req="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>" onclick="onClickBank(this);">
+                                <button class="list-group-item list-group-item-action <?php if($no == 0) echo 'active'; ?>" data-no="<?= $no; ?>" data-req="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>" onclick="onClickBank(this);">
                                     <img class="mb-1 w-50" src="<?= $image; ?>">
                                     <p class="mb-1"><?= $data['deskripsi']; ?></p>
                                     <small>No Rek : <?= $data['no_rek']; ?></small>
                                 </button>
-                            <?php }
+                            <?php $no++; }
                         } else { ?>
                             <button class="list-group-item list-group-item-action active" data-req="Tidak ada">
                                 <p class="mb-1 text-center">Data Tidak Ada..!</p>
@@ -72,11 +72,11 @@
                         <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr class="text-center bg-primary text-white">
-                                    <th width="5%">No</th>
-                                    <th>Tanggal Mutasi</th>
-                                    <th>Nominal</th>
-                                    <th>Tipe Mutasi</th>
+                                    <th width="2%">No</th>
+                                    <th width="13%">Tanggal Mutasi</th>
                                     <th>Keterangan</th>
+                                    <th>Nominal</th>
+                                    <th width="12%">Tipe Mutasi</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -135,9 +135,9 @@
                             <tr class="text-center bg-primary text-white">
                                 <th width="2%">No</th>
                                 <th width="13%">Tanggal Mutasi</th>
-                                <th>Nominal</th>
-                                <th width="10%">Tipe Mutasi</th>
                                 <th>Keterangan</th>
+                                <th>Nominal</th>
+                                <th width="12%">Tipe Mutasi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,9 +171,9 @@
                     <tr>
                         <td class="text-center align-middle">${no++}</td>
                         <td class="text-center align-middle">${item.tanggal}</td>
+                        <td class="text-center align-middle">${item.keterangan}</td>
                         <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
                         <td class="text-center align-middle ${warnaMutasi}">${tipeMutasi}</td>
-                        <td class="text-center align-middle">${item.keterangan}</td>
                     </tr>
                     `;
                 });
@@ -186,8 +186,8 @@
                     "dom": `
                         <"row" 
                             <"col-sm-12 col-md-5 mt-auto" l>
-                            <"col-sm-12 col-md-5 mt-auto" f>
-                            <"#logo-mutasi.col-sm-12 col-md-2 align-middle">
+                            <"col-sm-12 col-md-6 mt-auto" f>
+                            <"#logo-mutasi.col-sm-12 col-md-1 align-middle">
                         >
                         <"row" <"col-sm-12" t>>
                         <"row" 
@@ -215,11 +215,6 @@
     }
 
     function startup() {
-        // var norek = $('#dataAccount').children('option:selected').val();
-        // var tipe = $('#dataAccount').children('option:selected').attr('data-tipe');
-        // var username = $('#dataAccount').children('option:selected').attr('data-username');
-        // var password = $('#dataAccount').children('option:selected').attr('data-password');
-
         var norek = $('#dataAccount button.active').attr('data-req');
         var tipe = $('#dataAccount button.active').attr('data-tipe');
         var username = $('#dataAccount button.active').attr('data-username');
@@ -231,36 +226,9 @@
     }
 
     function onClickBank(e) {
-        var norek = $(e).attr('data-req');
-        var tipe = $(e).attr('data-tipe');
-        var username = $(e).attr('data-username');
-        var password = $(e).attr('data-password');
+        $('.list-group-item.active').removeClass('active');
+        $(e).addClass('active');
 
-        if (norek != "Tidak Ada") {
-            getData(tipe, norek, username, password);
-        }
+        startup();
     }
-
-    $(document).ready(function() {
-        // $('#dataAccount').change(function() {
-        //     var norek = $(this).children('option:selected').val();
-        //     var tipe = $(this).children('option:selected').attr('data-tipe');
-        //     var username = $(this).children('option:selected').attr('data-username');
-        //     var password = $(this).children('option:selected').attr('data-password');
-
-        //     getData(tipe, norek, username, password);
-        // });
-
-        // $('#dataAccount a').on('click', function (e) {
-        //     e.preventDefault();
-        //     var norek = $(this).attr('data-req');
-        //     var tipe = $(this).attr('data-tipe');
-        //     var username = $(this).attr('data-username');
-        //     var password = $(this).attr('data-password');
-
-        //     if (norek != "Tidak Ada") {
-        //         getData(tipe, norek, username, password);
-        //     }
-        // });
-    });
 </script>

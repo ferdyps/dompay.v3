@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2019 at 01:08 PM
+-- Generation Time: Dec 07, 2019 at 07:59 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -31,19 +31,22 @@ SET time_zone = "+00:00";
 CREATE TABLE `accounts` (
   `id_account` int(11) NOT NULL,
   `id` int(11) NOT NULL,
-  `username` varchar(80) NOT NULL,
-  `password` varchar(80) NOT NULL,
-  `no_rek` varchar(30) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `no_rek` varchar(255) NOT NULL,
   `typeBank` varchar(20) NOT NULL,
-  `saldo` varchar(15) NOT NULL
+  `saldo` varchar(15) NOT NULL,
+  `deskripsi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accounts`
 --
 
-INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `typeBank`, `saldo`) VALUES
-(13, 30, 'nurul201', 'dollies96', '00000000843684048', 'BNI', '');
+INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `typeBank`, `saldo`, `deskripsi`) VALUES
+(7, 69, 'cFcvcUlyQitNNzdYaEdXMW9CaDFZUT09', 'NXNpTjFDY1JCaVhOaGp2dkxxWWdkdz09', 'VXh6TGVwak5ObEptcXpmczlXUUVzQzdCM0ErWnRsUjJ0R1RMRGZJY1ljST0=', 'BNI', 'UDNGTVRBT2J5S3R', 'Akun Dummy BNI..'),
+(8, 68, 'V21tZldMSHdNSnVxdWlSaURKNkwrUT09', 'YmZrYnkyTW1VVkhXdThuSGgrZzQvQT09', 'cTRBSDNid09kOGFONDlxdE92dzJUUT09', 'Mandiri', 'bDJTWXZ2QStuaWZ', 'Akun utama'),
+(13, 69, 'V21tZldMSHdNSnVxdWlSaURKNkwrUT09', 'YmZrYnkyTW1VVkhXdThuSGgrZzQvQT09', 'eEczZ1JTRXFueG0yajJhTVpvQ1pLZz09', 'Mandiri', 'bDJTWXZ2QStuaWZ', 'Akun Mandiri utama');
 
 -- --------------------------------------------------------
 
@@ -81,7 +84,7 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `id_owner`) VALUES
-(42, 30);
+(70, 69);
 
 -- --------------------------------------------------------
 
@@ -107,22 +110,22 @@ CREATE TABLE `mutasi` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
-  `username` varchar(100) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `nohp` varchar(20) NOT NULL,
   `password` varchar(255) NOT NULL,
   `akses` int(1) NOT NULL,
   `fitur` varchar(255) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
-(30, 'Petrus', 'petrus', 'petrus@gmail.com', '081234567890', 'd4cf33622613ca191a0055807f4ff2f8', 2, 'All'),
-(42, 'Petrik', 'petrik', 'petrus@gmail.com', '081234567890', '5e90ed910593294e3effbcbd755d2b19', 3, 'Saldo, Dashboard, Kredit'),
-(49, 'Zahid', 'zahidakhyar@gmail.com', 'zahidakhyar@gmail.com', '081250685820', 'c651148415ab2a260e6c506075c12ae3', 2, 'All');
+(68, 'Zahid Akhyar', 'NXloRzVpMUtGZzdOMXFaL2hIcTMwdz09', 'zahidakhyar@gmail.com', '081250685820', 'VWlLeVRjbHhOZWpGakgzdEEvdFhJUT09', 2, 'All'),
+(69, 'Petrus Alex', 'Z1Q4cy9rcFNzVEZMbE9MQUlaOVZFQT09', 'petrus@gmail.com', '081234567890', 'Z1Q4cy9rcFNzVEZMbE9MQUlaOVZFQT09', 2, 'All'),
+(70, 'Petrik Ganteng', 'L0hvNm1SSVg4aVlHS3RnUGdDRGlRdz09', 'petrus@gmail.com', '081234567890', 'L0hvNm1SSVg4aVlHS3RnUGdDRGlRdz09', 3, 'Saldo, Debit');
 
 -- --------------------------------------------------------
 
@@ -133,7 +136,7 @@ INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `aks
 CREATE TABLE `vemployees` (
 `id` int(11)
 ,`nama` varchar(100)
-,`username` varchar(100)
+,`username` varchar(255)
 ,`email` varchar(255)
 ,`nohp` varchar(20)
 ,`password` varchar(255)
@@ -151,7 +154,7 @@ CREATE TABLE `vemployees` (
 CREATE TABLE `vowners` (
 `id` int(11)
 ,`nama` varchar(100)
-,`username` varchar(100)
+,`username` varchar(255)
 ,`email` varchar(255)
 ,`nohp` varchar(20)
 ,`password` varchar(255)
@@ -224,7 +227,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -242,17 +245,24 @@ ALTER TABLE `mutasi`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- Constraints for dumped tables
 --
 
 --
+-- Constraints for table `employees`
+--
+ALTER TABLE `employees`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`id_owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `mutasi`
 --
 ALTER TABLE `mutasi`
-  ADD CONSTRAINT `mutasi_ibfk_1` FOREIGN KEY (`no_rek`) REFERENCES `accounts` (`no_rek`);
+  ADD CONSTRAINT `mutasi_ibfk_1` FOREIGN KEY (`no_rek`) REFERENCES `accounts` (`no_rek`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

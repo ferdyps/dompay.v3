@@ -196,7 +196,7 @@
                 $('div#logo-mutasi').html(`<img src="` + image + `" class="w-100">`);
             },
             error:function(){
-                check = false;
+                $('#dataMutasi').html(`<h4 class="text-center">Data tidak ada..</h4>`);
             }
         });
     }
@@ -220,6 +220,7 @@
 
             getData(tipe, norek, username, password);
         });
+        
     });
 
     $(window).on('load', function() {

@@ -400,12 +400,7 @@ $(document).ready(function () {
     });
 // =============================================================    
     $('#dataAccount-saldo').change(function() {
-        var norek = $(this).children('option:selected').val();
-        var tipe = $(this).children('option:selected').attr('data-tipe');
-        var username = $(this).children('option:selected').attr('data-username');
-        var password = $(this).children('option:selected').attr('data-password');
-
-        getSaldoBank(tipe, norek, username, password);
+        startupSaldoBank();
     });
 // =============================================================
     $('form input').on('keyup', function () {
