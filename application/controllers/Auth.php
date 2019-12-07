@@ -11,7 +11,7 @@ class Auth extends MY_Controller {
 
 		if ($this->session->userdata('isLoggedIn')) {
 			if ($this->session->userdata('akses') == 1) {
-				$url = base_url('superadmin');
+				$url = base_url('admin');
 			} else if($this->session->userdata('akses') == 2) {
 				$url = base_url('owner');
 			} else {
