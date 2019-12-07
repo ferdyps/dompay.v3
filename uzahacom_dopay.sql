@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 07:59 AM
+-- Generation Time: Dec 07, 2019 at 01:43 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -35,18 +35,9 @@ CREATE TABLE `accounts` (
   `password` varchar(255) NOT NULL,
   `no_rek` varchar(255) NOT NULL,
   `typeBank` varchar(20) NOT NULL,
-  `saldo` varchar(15) NOT NULL,
+  `saldo` varchar(255) NOT NULL,
   `deskripsi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `accounts`
---
-
-INSERT INTO `accounts` (`id_account`, `id`, `username`, `password`, `no_rek`, `typeBank`, `saldo`, `deskripsi`) VALUES
-(7, 69, 'cFcvcUlyQitNNzdYaEdXMW9CaDFZUT09', 'NXNpTjFDY1JCaVhOaGp2dkxxWWdkdz09', 'VXh6TGVwak5ObEptcXpmczlXUUVzQzdCM0ErWnRsUjJ0R1RMRGZJY1ljST0=', 'BNI', 'UDNGTVRBT2J5S3R', 'Akun Dummy BNI..'),
-(8, 68, 'V21tZldMSHdNSnVxdWlSaURKNkwrUT09', 'YmZrYnkyTW1VVkhXdThuSGgrZzQvQT09', 'cTRBSDNid09kOGFONDlxdE92dzJUUT09', 'Mandiri', 'bDJTWXZ2QStuaWZ', 'Akun utama'),
-(13, 69, 'V21tZldMSHdNSnVxdWlSaURKNkwrUT09', 'YmZrYnkyTW1VVkhXdThuSGgrZzQvQT09', 'eEczZ1JTRXFueG0yajJhTVpvQ1pLZz09', 'Mandiri', 'bDJTWXZ2QStuaWZ', 'Akun Mandiri utama');
 
 -- --------------------------------------------------------
 
@@ -79,13 +70,6 @@ CREATE TABLE `employees` (
   `id_owner` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `employees`
---
-
-INSERT INTO `employees` (`id`, `id_owner`) VALUES
-(70, 69);
-
 -- --------------------------------------------------------
 
 --
@@ -94,8 +78,8 @@ INSERT INTO `employees` (`id`, `id_owner`) VALUES
 
 CREATE TABLE `mutasi` (
   `id_mutasi` int(11) NOT NULL,
-  `no_rek` varchar(30) NOT NULL,
-  `tgl_mutasi` timestamp NULL DEFAULT NULL,
+  `no_rek` varchar(255) NOT NULL,
+  `tgl_mutasi` date DEFAULT NULL,
   `keterangan` text NOT NULL,
   `nominal` varchar(15) NOT NULL,
   `tipe_mutasi` varchar(6) NOT NULL
@@ -111,8 +95,8 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `username` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `nohp` varchar(20) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `nohp` varchar(20) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `akses` int(1) NOT NULL,
   `fitur` varchar(255) DEFAULT NULL
@@ -123,9 +107,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
-(68, 'Zahid Akhyar', 'NXloRzVpMUtGZzdOMXFaL2hIcTMwdz09', 'zahidakhyar@gmail.com', '081250685820', 'VWlLeVRjbHhOZWpGakgzdEEvdFhJUT09', 2, 'All'),
-(69, 'Petrus Alex', 'Z1Q4cy9rcFNzVEZMbE9MQUlaOVZFQT09', 'petrus@gmail.com', '081234567890', 'Z1Q4cy9rcFNzVEZMbE9MQUlaOVZFQT09', 2, 'All'),
-(70, 'Petrik Ganteng', 'L0hvNm1SSVg4aVlHS3RnUGdDRGlRdz09', 'petrus@gmail.com', '081234567890', 'L0hvNm1SSVg4aVlHS3RnUGdDRGlRdz09', 3, 'Saldo, Debit');
+(1, 'Superadmin', 'Y2l1aGYwMGI4dE9GSDQva2gxazN5UT09', NULL, NULL, 'VWlLeVRjbHhOZWpGakgzdEEvdFhJUT09', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -227,7 +209,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -239,13 +221,13 @@ ALTER TABLE `akses`
 -- AUTO_INCREMENT for table `mutasi`
 --
 ALTER TABLE `mutasi`
-  MODIFY `id_mutasi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mutasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- Constraints for dumped tables
