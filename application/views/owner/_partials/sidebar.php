@@ -5,7 +5,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('owner'); ?>">
         <div class="sidebar-brand-icon">
             <!-- <i class="fas fa-money-bill-wave"></i> -->
-            <img src="<?= base_url('assets/images/login.png')?>" width="100%"><img>
+            <img src="<?= base_url('assets/images/logo/logo-master-w.png')?>" width="100%">
         </div>
     </a>
 
@@ -65,7 +65,7 @@
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <button class="rounded-circle border-0" id="sidebarToggle" onclick="sidebar();"></button>
     </div>
 
 </ul>

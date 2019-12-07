@@ -55,7 +55,7 @@ class Auth extends MY_Controller {
 					];
 
 					if ($data_account->akses == 1) {
-						$url = base_url('superadmin');
+						$url = base_url('admin');
 					} elseif ($data_account->akses == 2) {
 						$array['email'] = $data_account->email;
 						$array['nohp'] = $data_account->nohp;

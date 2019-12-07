@@ -309,11 +309,10 @@ function getSaldoBank(bank, req, username, password) {
 
             if (userURL == "owner") {
                 $.ajax({
-                    url: currentURL.substring(0, 41) + '/updateSaldo_accountBank/' + req + '/' + data,
+                    url: currentURL.substring(0, 41) + '/updateSaldo_accountBank',
                     type: "post",
+                    data: {req:req, saldo:data},
                     dataType: "json",
-                    contentType: false,
-                    processData: false,
                     async: true
                 });
             }
@@ -331,7 +330,7 @@ function getSaldoBank(bank, req, username, password) {
         }
     });
 }
-
+// =============================================================
 function startupSaldoBank() {
     var norek = $('#dataAccount-saldo').children('option:selected').val();
     var tipe = $('#dataAccount-saldo').children('option:selected').attr('data-tipe');
@@ -388,6 +387,19 @@ function check_data_bank(content) {
     });
 }
 // =============================================================
+function sidebar() {
+    var sidebar = $(".sidebar-toggled").is(":visible");
+    if (sidebar) {
+        $('.sidebar-brand-icon').html(`
+            <img src="./assets/images/logo/logo-master-w.png" width="100%">
+        `);
+    } else {
+        $('.sidebar-brand-icon').html(`
+            <img src="./assets/images/logo/logo-dompet-w.png" width="100%">
+        `);
+    }
+}
+
 $(window).on('load', function() {
     startupSaldoBank();
 });

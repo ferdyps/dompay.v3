@@ -50,12 +50,35 @@
       </div>
       <!-- Card Body -->
       <div class="card-body">
-        <div class="chart-area">
-          <canvas id="myAreaChart"></canvas>
-        </div>
+        <div id="chartDebit" style="min-height: 370px; width: 100%;"></div>
       </div>
     </div>
   </div>
+  <script>
+  $(window).on('load', function() {
+      var chart = new CanvasJS.Chart("chartDebit", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+          text: "Transaksi Debit"
+        },
+        axisX: {
+          valueFormatString: "DD MMM YYYY"
+        },
+        axisY: {
+          title: "Total Debit"
+        },
+        data: [{
+          type: "splineArea",
+          color: "#6599FF",
+          xValueType: "dateTime",
+          xValueFormatString: "DD MMM YYYY",
+          dataPoints: <?php echo json_encode($dataPointsDebit, JSON_NUMERIC_CHECK); ?>
+        }]
+      });
+      chart.render();
+  });
+  </script>
 
   <!-- Pie Chart -->
   <div class="col-xl-4 col-lg-5">

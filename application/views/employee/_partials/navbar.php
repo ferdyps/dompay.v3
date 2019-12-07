@@ -8,7 +8,7 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 <div class="d-none d-md-inline-block">
-    <img src="<?= base_url('assets/images/for_employee.png'); ?>">
+    <img src="<?= base_url('assets/images/logo/logo-emp-b.png'); ?>">
 </div>
 
 <!-- Topbar Saldo -->

@@ -26,10 +26,10 @@
                     $this->dataAccount[$no]['password'] = $this->cryptor($value['password'], 'd');
                     $this->dataAccount[$no]['no_rek'] = $this->cryptor($value['no_rek'], 'd');
                     $this->dataAccount[$no]['typeBank'] = $value['typeBank'];
-                    $this->dataAccount[$no]['saldo'] = $this->cryptor($value['saldo'], 'd');
+                    $this->dataAccount[$no]['saldo'] = $value['saldo'];
                     $this->dataAccount[$no]['deskripsi'] = $value['deskripsi'];
 
-                    $this->totalSaldo += $this->cryptor($value['saldo'], 'd');
+                    $this->totalSaldo += $value['saldo'];
                     $no++;
                 }
             }
@@ -48,9 +48,26 @@
 // ========================= View ==============================
 // =============================================================
         public function index() {
+            $dataPointsDebit = [];
+            $dataAccount = $this->account_model->select($this->id_user);
+            foreach ($dataAccount as $keyA => $valueA) {
+                $query = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Debit')->result_array();
+
+                foreach ($query as $keyB => $valueB) {
+                    array_push($dataPointsDebit, ['x' => strtotime($valueB['tgl_mutasi']) * 1000, 'y' => $valueB['total']]);
+                }
+            }
+
+            function cmp($a, $b) {
+                return strcmp($a['x'], $b['x']);
+            }
+
+            usort($dataPointsDebit, "cmp");
+            
             $data = [
                 'content' => 'owner/dashboard',
-                'title' => 'Dashboard'
+                'title' => 'Dashboard',
+                'dataPointsDebit' => $dataPointsDebit
             ];
 
             $this->load->view('owner/index', $data);
@@ -307,8 +324,11 @@
             echo json_encode($this->dataAccount);
         }
 
-        public function updateSaldo_accountBank($id, $saldo) {
-            $query = $this->account_model->edit($this->cryptor($id), ['saldo' => $this->cryptor($saldo)]);
+        public function updateSaldo_accountBank() {
+            $req = $this->input->post('req');
+            $saldo = $this->input->post('saldo');
+            
+            $query = $this->account_model->edit($this->cryptor($req), ['saldo' => $saldo]);
 
             if ($query) {
                 $json['message'] = 'Saldo berhasil di Update..';
@@ -326,6 +346,39 @@
                 $json['message'] = 'Akun berhasil dihapus..!';
             } else {
                 $json['errors'] = 'Akun gagal dihapus..!';
+            }
+
+            echo json_encode($json);
+
+
+        }
+// =============================================================
+// ======================= Data Mutasi =========================
+// =============================================================
+        public function add_mutasi() {
+            $req = $this->input->post('req');
+            $tgl_mutasi = $this->input->post('tgl_mutasi');
+            $keterangan = $this->input->post('keterangan');
+            $nominal = $this->input->post('nominal');
+            $tipe_mutasi = $this->input->post('tipe_mutasi');
+
+            $tgl = new DateTime($tgl_mutasi);
+            $tgl->format('Y-m-d');
+
+            $data = [
+                'no_rek' => $this->cryptor($req),
+                'tgl_mutasi' => $tgl->format('Y-m-d'),
+                'keterangan' => $keterangan,
+                'nominal' => $nominal,
+                'tipe_mutasi' => $tipe_mutasi
+            ];
+
+            $query = $this->mutasi_model->add($data);
+
+            if ($query) {
+                $json['message'] = 'Mutasi berhasil disimpan..';
+            } else {
+                $json['errors'] = 'Mutasi gagal disimpan..!';
             }
 
             echo json_encode($json);

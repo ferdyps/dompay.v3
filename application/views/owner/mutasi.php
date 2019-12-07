@@ -9,28 +9,28 @@
                     <h6 class="mr-auto font-weight-bold text-primary mt-2">Data Mutasi</h6>
                 </div>
                 <?php /*==============================
-                <div class="col-sm-12 col-md-auto">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-auto">
-                            <label for="dataAccount" class="mt-2">Pilih Data Bank :</label>
-                        </div>
-                        <div class="col-sm-12 col-md-auto">
-                            <select id="dataAccount" class="form-control select-100">
-                                <?php 
-                                if ($listDataAccount != null) {
-                                    foreach ($listDataAccount as $data) { ?>
-                                        <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
-                                    <?php }
-                                } else { ?>
-                                    <option disabled selected>Tidak Ada</option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="col-sm-12 mt-2 mt-md-0 p-md-0 col-md-auto text-center">
-                            <button class="btn btn-primary w-100" id="refreshMutasi" onclick="startup();">Refresh</button>
+                    <div class="col-sm-12 col-md-auto">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-auto">
+                                <label for="dataAccount" class="mt-2">Pilih Data Bank :</label>
+                            </div>
+                            <div class="col-sm-12 col-md-auto">
+                                <select id="dataAccount" class="form-control select-100">
+                                    <?php 
+                                    if ($listDataAccount != null) {
+                                        foreach ($listDataAccount as $data) { ?>
+                                            <option value="<?= $data['no_rek']; ?>" data-username="<?= $data['username']; ?>" data-password="<?= $data['password']; ?>" data-tipe="<?= $data['typeBank']; ?>"><?= $data['typeBank'] . " | " . $data['no_rek']; ?></option>
+                                        <?php }
+                                    } else { ?>
+                                        <option disabled selected>Tidak Ada</option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-sm-12 mt-2 mt-md-0 p-md-0 col-md-auto text-center">
+                                <button class="btn btn-primary w-100" id="refreshMutasi" onclick="startup();">Refresh</button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 =====================================*/ ?>
                 <div class="col-auto text-center">
                     <button class="btn btn-primary w-100" id="refreshMutasi" onclick="startup();">Refresh</button>
@@ -40,7 +40,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12 col-lg-3 mb-lg-auto mb-md-3">
-                    <div class="list-group" id="dataAccount">
+                    <div class="list-group shadow" id="dataAccount">
                         <?php 
                         if ($listDataAccount != null) {
                             $no = 0;
@@ -166,6 +166,18 @@
                             nominal = item.debit;
                         }
                     }
+
+                    $.ajax({
+                        url: "<?= base_url('owner/add_mutasi'); ?>",
+                        type: "post",
+                        data: {req:req, tgl_mutasi:item.tanggal, keterangan:item.keterangan, nominal:nominal, tipe_mutasi:tipeMutasi},
+                        dataType: "json",
+                        async: true
+                    });
+
+                    item.tanggal = new Date(item.tanggal);
+                    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                    item.tanggal = item.tanggal.getDate() + "-" + months[item.tanggal.getMonth()] + "-" + item.tanggal.getFullYear();
                     
                     innerHTML += `
                     <tr>
