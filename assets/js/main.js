@@ -303,8 +303,23 @@ function getSaldoBank(bank, req, username, password) {
             $('#dataSaldo').addClass('mt-2');
             $('#dataSaldo').html('Saldo : Rp. '+ numeral(data).format('0,0'));
 
-            var currentURL = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-            if (currentURL == "mutasi") {
+            var currentURL = window.location.href;
+
+            var userURL = currentURL.substring(currentURL.indexOf('/') + 31, 41);
+
+            if (userURL == "owner") {
+                $.ajax({
+                    url: currentURL.substring(0, 41) + '/updateSaldo_accountBank/' + req + '/' + data,
+                    type: "post",
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    async: true
+                });
+            }
+
+            var mutasiURL = currentURL.substring(currentURL.lastIndexOf('/') + 1);
+            if (mutasiURL == "mutasi") {
                 startup();
             }
         },

@@ -16,6 +16,10 @@
             }
         }
 
+        public function edit($id, $data) {
+            return $this->edit_data($this->table, 'no_rek', $id, $data);
+        }
+
         public function delete($id) {
             return $this->delete_data($this->table, 'id_account', $id);
         }

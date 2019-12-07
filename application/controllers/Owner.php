@@ -29,7 +29,7 @@
                     $this->dataAccount[$no]['saldo'] = $this->cryptor($value['saldo'], 'd');
                     $this->dataAccount[$no]['deskripsi'] = $value['deskripsi'];
 
-                    $this->totalSaldo += $this->dataAccount[$no]['saldo'];
+                    $this->totalSaldo += $this->cryptor($value['saldo'], 'd');
                     $no++;
                 }
             }
@@ -305,6 +305,18 @@
 
         public function get_accountBank() {
             echo json_encode($this->dataAccount);
+        }
+
+        public function updateSaldo_accountBank($id, $saldo) {
+            $query = $this->account_model->edit($this->cryptor($id), ['saldo' => $this->cryptor($saldo)]);
+
+            if ($query) {
+                $json['message'] = 'Saldo berhasil di Update..';
+            } else {
+                $json['errors'] = 'Saldo gagal di Update..!';
+            }
+
+            echo json_encode($json);
         }
 
         public function delete_accountBank($id) {
