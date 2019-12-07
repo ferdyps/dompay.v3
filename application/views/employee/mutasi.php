@@ -153,6 +153,10 @@
                             }
                         }
                     <?php } ?>
+
+                    data[index]['tanggal'] = new Date(data[index]['tanggal']);
+                    var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+                    data[index]['tanggal'] = data[index]['tanggal'].getDate() + "-" + months[data[index]['tanggal'].getMonth()] + "-" + data[index]['tanggal'].getFullYear();
                     
                     innerHTML += `
                     <tr>
