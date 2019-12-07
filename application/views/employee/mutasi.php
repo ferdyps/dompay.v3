@@ -79,11 +79,11 @@
                     <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr class="text-center bg-primary text-white">
-                                <th width="5%">No</th>
-                                <th>Tanggal Mutasi</th>
-                                <th>Nominal</th>
-                                <th>Tipe Mutasi</th>
+                                <th width="2%">No</th>
+                                <th width="13%">Tanggal Mutasi</th>
                                 <th>Keterangan</th>
+                                <th>Nominal</th>
+                                <th width="12%">Tipe Mutasi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -158,9 +158,9 @@
                     <tr>
                         <td class="text-center align-middle">${no++}</td>
                         <td class="text-center align-middle">${data[index]['tanggal']}</td>
+                        <td class="text-center align-middle">${data[index]['keterangan']}</td>
                         <td class="text-center align-middle">${numeral(nominal).format('0,0')}</td>
                         <td class="text-center align-middle ${warnaMutasi}">${tipeMutasi}</td>
-                        <td class="text-center align-middle">${data[index]['keterangan']}</td>
                     </tr>
                     `;
                 }
@@ -173,8 +173,8 @@
                     "dom": `
                         <"row" 
                             <"col-sm-12 col-md-5 mt-auto" l>
-                            <"col-sm-12 col-md-5 mt-auto" f>
-                            <"#logo-mutasi.col-sm-12 col-md-2 align-middle">
+                            <"col-sm-12 col-md-6 mt-auto" f>
+                            <"#logo-mutasi.col-sm-12 col-md-1 align-middle">
                         >
                         <"row" <"col-sm-12" t>>
                         <"row" 
