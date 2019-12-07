@@ -26,8 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['base_url']     = 'http://localhost/uzahacom/dompay.v3';
 $config['assets_url']   = $config['base_url'] . '/assets';
 $config['images_url']   = $config['assets_url'] . '/images';
+$config['vendor_url']   = $config['assets_url'] . '/vendor';
 
-$config['web_title']	= "DomPAY - Dompet Digital Multi Finance";
+$config['web_title']	= "DOPAY - Dompet Masa Kini";
 $config['web_footer']	= $config['web_title'] . " &copy; " . date('Y') . ". Version 1.0";
 
 /*
@@ -329,7 +330,8 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+
+$config['encryption_key'] = hex2bin('809df8227001b1c05b64548ef2893bd8');
 
 /*
 |--------------------------------------------------------------------------

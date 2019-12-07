@@ -14,6 +14,7 @@
             $this->load->library('form_validation');
         }
 
+        /*
         function index_post() {
             $this->form_validation->set_rules([
                 [
@@ -95,6 +96,7 @@
                 }
             }
         }
+        */
 
         function index_get() {
             $id = $this->get('id');
@@ -114,6 +116,7 @@
             }
         }
 
+        /*
         function index_put() {
             $id = $this->put('id');
 
@@ -162,6 +165,6 @@
                 }
             }
         }
-    
+        */
     }  
 ?>

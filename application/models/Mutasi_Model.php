@@ -19,6 +19,10 @@
                 return false;
             }
         }
+
+        public function select($no_rek) {
+            return $this->select_data($this->table, 'no_rek', $no_rek)->result_array();
+        }
 // =============================================================
         public function selectTipeByReq($no_rek, $tipe) {
             $this->db->select('sum(nominal) as total, tgl_mutasi');

@@ -13,6 +13,7 @@
             $this->load->library('form_validation');
         }
 
+        /*
         function index_post() {
             $this->form_validation->set_rules([
                 [
@@ -71,6 +72,7 @@
                 ], REST_Controller::HTTP_NOT_ACCEPTABLE);
             }
         }
+        */
 
         function index_get() {
             $id = $this->get('id');
@@ -89,7 +91,8 @@
                 ], REST_Controller::HTTP_NOT_FOUND);
             }
         }
-
+        
+        /*
         function index_put() {
             $id = $this->put('id');
 
@@ -138,6 +141,6 @@
                 }
             }
         }
-    
+        */
     }  
 ?>
