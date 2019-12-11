@@ -112,7 +112,7 @@
             processData: false,
             async: true,
             timeout: 40000,
-            beforeSend:function(){
+            beforeSend:() => {
                 $('#dataAccount button').attr('disabled', true);
                 $('#refreshMutasi').attr('disabled', true);
                 $('#dataMutasi').html(`
@@ -123,11 +123,11 @@
                 </div>
                 `);
             },
-            complete:function(){
+            complete:() => {
                 $('#dataAccount button').attr('disabled', false);
                 $('#refreshMutasi').attr('disabled', false);
             },
-            success:function(data){
+            success:data => {
                 var innerHTML = `
                 <div class="table-responsive">
                     <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
@@ -243,4 +243,10 @@
 
         startup();
     }
+
+    $(document).ready(() => {
+        // setInterval(() => {
+        //     startup();
+        // }, 10000);
+    });
 </script>

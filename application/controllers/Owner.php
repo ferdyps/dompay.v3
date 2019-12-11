@@ -52,25 +52,26 @@
             $dataAccount = $this->account_model->select($this->id_user);
 
             foreach ($dataAccount as $keyA => $valueA) {
-                $query = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Debit')->result_array();
+                $query = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Debit', true)->result_array();
 
                 foreach ($query as $keyB => $valueB) {
                     array_push($dataPointsDebit, ['x' => strtotime($valueB['tgl_mutasi']) * 1000, 'y' => $valueB['total']]);
                 }
 
-                $query2 = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Kredit')->result_array();
+                $query2 = $this->mutasi_model->selectTipeByReq($valueA['no_rek'], 'Kredit', true)->result_array();
 
                 foreach ($query2 as $keyB => $valueB) {
                     array_push($dataPointsKredit, ['x' => strtotime($valueB['tgl_mutasi']) * 1000, 'y' => $valueB['total']]);
                 }
             }
 
+            //Sorting
             function cmp($a, $b) {
                 return strcmp($a['x'], $b['x']);
             }
 
-            usort($dataPointsDebit, "cmp");
-            usort($dataPointsKredit, "cmp");
+            // usort($dataPointsDebit, "cmp");
+            // usort($dataPointsKredit, "cmp");
             
             $data = [
                 'content' => 'owner/dashboard',
@@ -372,7 +373,6 @@
             $tipe_mutasi = $this->input->post('tipe_mutasi');
 
             $tgl = new DateTime($tgl_mutasi);
-            $tgl->format('Y-m-d');
 
             $data = [
                 'no_rek' => $this->cryptor($req),

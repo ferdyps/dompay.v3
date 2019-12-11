@@ -307,7 +307,7 @@ function getSaldoBank(bank, req, username, password) {
 
             var userURL = currentURL.substring(currentURL.indexOf('/') + 31, 41);
 
-            if (userURL == "owner") {
+            // if (userURL == "owner") {
                 $.ajax({
                     url: currentURL.substring(0, 41) + '/updateSaldo_accountBank',
                     type: "post",
@@ -315,7 +315,7 @@ function getSaldoBank(bank, req, username, password) {
                     dataType: "json",
                     async: true
                 });
-            }
+            // }
 
             var mutasiURL = currentURL.substring(currentURL.lastIndexOf('/') + 1);
             if (mutasiURL == "mutasi") {
@@ -391,11 +391,11 @@ function sidebar() {
     var sidebar = $(".sidebar-toggled").is(":visible");
     if (sidebar) {
         $('.sidebar-brand-icon').html(`
-            <img src="./assets/images/logo/logo-master-w.png" width="100%">
+            <img src="./../assets/images/logo/logo-master-w.png" width="100%">
         `);
     } else {
         $('.sidebar-brand-icon').html(`
-            <img src="./assets/images/logo/logo-dompet-w.png" width="100%">
+            <img src="./../assets/images/logo/logo-dompet-w.png" width="100%">
         `);
     }
 }

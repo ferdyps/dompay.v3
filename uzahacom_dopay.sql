@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 01:43 PM
+-- Generation Time: Dec 08, 2019 at 07:39 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -107,7 +107,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nama`, `username`, `email`, `nohp`, `password`, `akses`, `fitur`) VALUES
-(1, 'Superadmin', 'Y2l1aGYwMGI4dE9GSDQva2gxazN5UT09', NULL, NULL, 'VWlLeVRjbHhOZWpGakgzdEEvdFhJUT09', 1, NULL);
+(1, 'Superadmin', 'QzVpTC82dEtqQ1FWaFJobnl6Y3FnUT09', NULL, NULL, 'TzZlK1RSZGZBRE1uUitOSEt2eEVqQT09', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -151,7 +151,7 @@ CREATE TABLE `vowners` (
 --
 DROP TABLE IF EXISTS `vemployees`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vemployees`  AS  select `employees`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur`,`employees`.`id_owner` AS `id_owner` from (`users` join `employees` on((`users`.`id` = `employees`.`id`))) ;
+CREATE VIEW `vemployees`  AS  select `employees`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur`,`employees`.`id_owner` AS `id_owner` from (`users` join `employees` on((`users`.`id` = `employees`.`id`))) ;
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vowners`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vowners`  AS  select `users`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur` from (`users` left join `employees` on((`users`.`id` = `employees`.`id`))) where isnull(`employees`.`id_owner`) ;
+CREATE VIEW `vowners`  AS  select `users`.`id` AS `id`,`users`.`nama` AS `nama`,`users`.`username` AS `username`,`users`.`email` AS `email`,`users`.`nohp` AS `nohp`,`users`.`password` AS `password`,`users`.`akses` AS `akses`,`users`.`fitur` AS `fitur` from (`users` left join `employees` on((`users`.`id` = `employees`.`id`))) where isnull(`employees`.`id_owner`) ;
 
 --
 -- Indexes for dumped tables
@@ -209,7 +209,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `akses`
@@ -221,13 +221,13 @@ ALTER TABLE `akses`
 -- AUTO_INCREMENT for table `mutasi`
 --
 ALTER TABLE `mutasi`
-  MODIFY `id_mutasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_mutasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

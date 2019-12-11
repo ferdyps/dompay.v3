@@ -1,7 +1,7 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
     
-    class Mutasi_Model extends MY_Model {
+    class Mutasi_model extends MY_Model {
         protected $table = 'mutasi';
 // =============================================================
         public function add($data) {
@@ -24,12 +24,15 @@
             return $this->select_data($this->table, 'no_rek', $no_rek)->result_array();
         }
 // =============================================================
-        public function selectTipeByReq($no_rek, $tipe) {
+        public function selectTipeByReq($no_rek, $tipe, $stats = null) {
             $this->db->select('sum(nominal) as total, tgl_mutasi');
             
             $where = "no_rek = '" . $no_rek . "' AND tipe_mutasi = '" . $tipe . "'";
             $this->db->where($where);
             $this->db->group_by('tgl_mutasi');
+            if ($stats) {
+                $this->db->order_by('tgl_mutasi', 'asc');
+            }
             return $this->db->get($this->table);
         }
 // =============================================================

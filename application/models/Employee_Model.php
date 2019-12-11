@@ -2,7 +2,7 @@
     
     defined('BASEPATH') OR exit('No direct script access allowed');
     
-    class Employee_Model extends MY_Model {
+    class Employee_model extends MY_Model {
         protected $table = 'users', $table_emp = 'employees', $view_emp = 'vemployees';
 // =============================================================
         public function add($data, $id_owner) {

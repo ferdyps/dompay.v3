@@ -50,7 +50,6 @@ class Auth extends MY_Controller {
 						'id' => $data_account->id,
 						'nama' => $data_account->nama,
 						'akses' => $data_account->akses,
-						'fitur' => $data_account->fitur,
 						'isLoggedIn' => true
 					];
 

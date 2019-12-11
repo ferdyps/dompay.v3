@@ -33,6 +33,22 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr class="text-center bg-primary text-white">
+                            <th width="2%">No</th>
+                            <th width="13%">Tanggal Mutasi</th>
+                            <th>Keterangan</th>
+                            <th>Nominal</th>
+                            <th width="12%">Tipe Mutasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <script>$('#dataTable').DataTable();</script>
         </div>
     </div>
 </div>
@@ -60,7 +76,7 @@
             processData: false,
             async: true,
             timeout: 40000,
-            beforeSend:function(){
+            beforeSend:() => {
                 $('#dataAccount').attr('disabled', true);
                 $('.card-body').html(`
                 <div class="col text-center">
@@ -70,23 +86,23 @@
                 </div>
                 `);
             },
-            complete:function(){
+            complete:() => {
                 $('#dataAccount').attr('disabled', false);
             },
-            success:function(data){
+            success:data => {
                 var innerHTML = `
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr class="text-center bg-primary text-white">
-                                <th width="2%">No</th>
-                                <th width="13%">Tanggal Mutasi</th>
-                                <th>Keterangan</th>
-                                <th>Nominal</th>
-                                <th width="12%">Tipe Mutasi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr class="text-center bg-primary text-white">
+                                    <th width="2%">No</th>
+                                    <th width="13%">Tanggal Mutasi</th>
+                                    <th>Keterangan</th>
+                                    <th>Nominal</th>
+                                    <th width="12%">Tipe Mutasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                       `;
                 
                 for (let index = 0; index < data.length; index++) {
@@ -200,7 +216,7 @@
                 $('div#logo-mutasi').html(`<img src="` + image + `" class="w-100">`);
             },
             error:function(){
-                $('#dataMutasi').html(`<h4 class="text-center">Data tidak ada..</h4>`);
+                $('.card-body').html(`<h4 class="text-center">Data tidak ada..</h4>`);
             }
         });
     }
@@ -214,9 +230,12 @@
         getData(tipe, norek, username, password);
     }
 
-    $(document).ready(function() {
-
-        $('#dataAccount').change(function() {
+    $(document).ready(() => {
+        // setInterval(() => {
+        //     startup();
+        // }, 10000);
+        
+        $('#dataAccount').change(() => {
             var norek = $(this).children('option:selected').val();
             var tipe = $(this).children('option:selected').attr('data-tipe');
             var username = $(this).children('option:selected').attr('data-username');
@@ -227,7 +246,7 @@
         
     });
 
-    $(window).on('load', function() {
+    $(window).on('load', () => {
         <?php if (!in_array('Saldo', $this->fitur)) { ?>
             startup();
         <?php } ?>

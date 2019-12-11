@@ -7,14 +7,16 @@
         public function __construct() {
             parent::__construct();
 
-            $this->load->model(['account_model', 'mutasi_model']);
+            $this->load->model(['account_model', 'mutasi_model', 'user_model']);
             $this->load->library('form_validation');
 
             $this->id_user = $this->session->userdata('id');
             $this->id_owner = $this->session->userdata('id_owner');
             $this->nama = $this->session->userdata('nama');
 
-            $this->fitur = explode(', ', $this->session->userdata('fitur'));
+            $dataEmployee = $this->user_model->select($this->id_user);
+
+            $this->fitur = explode(', ', $dataEmployee->fitur);
 
             $dataAccount = $this->account_model->select($this->id_owner);
 
@@ -42,16 +44,16 @@
         }
 // =============================================================
         public function index() {
-            if(in_array('Dashboard', $this->fitur)) {
-                $data = [
-                    'content' => 'employee/dashboard',
-                    'title' => 'Dashboard'
-                ];
+            // if(in_array('Dashboard', $this->fitur)) {
+            //     $data = [
+            //         'content' => 'employee/dashboard',
+            //         'title' => 'Dashboard'
+            //     ];
 
-                $this->load->view('employee/index', $data);
-            } else {
+            //     $this->load->view('employee/index', $data);
+            // } else {
                 redirect(base_url('employee/mutasi'), 'refresh');
-            }
+            // }
         }
 
         public function mutasi() {
