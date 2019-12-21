@@ -141,8 +141,7 @@ class Auth extends MY_Controller {
 					'email' => $email,
 					'nohp' => $nohp,
 					'password' => $this->cryptor($password),
-					'akses' => 2,
-					'fitur' => 'All'
+					'akses' => 2
 				];
 
 				$query = $this->auth_model->register($data);

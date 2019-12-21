@@ -2,21 +2,21 @@
     defined('BASEPATH') OR exit('No direct script access allowed');
     
     class Employee extends MY_Controller {
-        public $id_user, $id_owner, $nama, $fitur, $dataAccount;
+        public $id_user, $id_owner, $nama, $fitur = null, $dataAccount;
 // =============================================================
         public function __construct() {
             parent::__construct();
 
-            $this->load->model(['account_model', 'mutasi_model', 'user_model']);
+            $this->load->model(['account_model', 'mutasi_model', 'user_model', 'employee_model']);
             $this->load->library('form_validation');
 
             $this->id_user = $this->session->userdata('id');
             $this->id_owner = $this->session->userdata('id_owner');
             $this->nama = $this->session->userdata('nama');
 
-            $dataEmployee = $this->user_model->select($this->id_user);
+            $dataEmployee = $this->employee_model->select($this->id_user);
 
-            $this->fitur = explode(', ', $dataEmployee->fitur);
+            @$this->fitur = explode(', ', $dataEmployee->fitur);
 
             $dataAccount = $this->account_model->select($this->id_owner);
 

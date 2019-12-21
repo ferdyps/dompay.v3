@@ -437,11 +437,10 @@
                             'email' => $this->email,
                             'nohp' => $this->nohp,
                             'password' => $this->cryptor($password),
-                            'akses' => 3,
-                            'fitur' => $fitur
+                            'akses' => 3
                         ];
 
-                        $query = $this->employee_model->add($data, $this->id_user);
+                        $query = $this->employee_model->add($data, $fitur, $this->id_user);
 
                         if ($query) {
                             $json['message'] = "Akun berhasil ditambah..";
@@ -501,8 +500,7 @@
                     
                     if ($this->form_validation->run() == TRUE) {
                         $data = [
-                            'nama' => $nama,
-                            'fitur' => $fitur
+                            'nama' => $nama
                         ];
 
                         if ($this->input->post('password') != NULL) {
@@ -510,8 +508,9 @@
                         }
 
                         $query = $this->employee_model->edit($id, $data);
+                        $query2 = $this->employee_model->edit_fitur($id, ['fitur' => $fitur]);
 
-                        if ($query) {
+                        if ($query && $query2) {
                             $json['message'] = "Akun berhasil diubah..";
                         } else {
                             $json['errors'] = "Akun gagal diubah..!";

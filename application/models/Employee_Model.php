@@ -5,7 +5,7 @@
     class Employee_model extends MY_Model {
         protected $table = 'users', $table_emp = 'employees', $view_emp = 'vemployees';
 // =============================================================
-        public function add($data, $id_owner) {
+        public function add($data, $fitur, $id_owner) {
             $this->add_data($this->table, $data);
             
             $this->db->where('username', $data['username']);
@@ -13,7 +13,8 @@
             
             $data_emp = [
                 'id' => $userdata->id,
-                'id_owner' => $id_owner
+                'id_owner' => $id_owner,
+                'fitur' => $fitur
             ];
 
             return $this->add_data($this->table_emp, $data_emp);
@@ -29,6 +30,10 @@
 
         public function edit($id, $data) {
             return $this->edit_data($this->table, 'id', $id, $data);
+        }
+
+        public function edit_fitur($id, $data) {
+            return $this->edit_data($this->table_emp, 'id', $id, $data);
         }
 
         public function delete($id) {
